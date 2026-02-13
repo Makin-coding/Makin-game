@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏中心 - 方块爆破 & 贪食蛇</title>
+    <style>
+        /* 通用样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            padding: 20px;
+        }
+        
+        /* 游戏中心容器 */
+        .game-center-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        /* 头部 */
+        .game-center-header {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(58, 134, 255, 0.2), rgba(76, 201, 240, 0.2));
+            border-radius: 20px;
+            border: 2px solid #3a86ff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-center-header h1 {
+            color: #3a86ff;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(58, 134, 255, 0.7);
+            letter-spacing: 2px;
+        }
+        
+        .game-center-header p {
+            color: #ff9e00;
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        /* 游戏选择区域 */
+        .game-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .game-card {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            border-color: #3a86ff;
+        }
+        
+        .game-card.active {
+            border-color: #4CAF50;
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.5);
+        }
+        
+        .game-card-header {
+            padding: 25px;
+            text-align: center;
+            background: linear-gradient(to right, var(--game-color), var(--game-color-dark));
+        }
+        
+        .game-card.block {
+            --game-color: #3a86ff;
+            --game-color-dark: #4361ee;
+        }
+        
+        .game-card.snake {
+            --game-color: #4CAF50;
+            --game-color-dark: #45a049;
+        }
+        
+        .game-card-header h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .game-card-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .game-card-body {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--game-color);
+        }
+        
+        .game-features {
+            list-style: none;
+        }
+        
+        .game-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .game-features li:before {
+            content: "✓";
+            color: var(--game-color);
+            font-weight: bold;
+        }
+        
+        .game-card-footer {
+            padding: 20px 25px;
+            background-color: rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        
+        .play-btn {
+            background: linear-gradient(to right, var(--game-color), var(--game-color-dark));
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            letter-spacing: 1px;
+            width: 100%;
+        }
+        
+        .play-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 游戏展示区域 */
+        .game-display-area {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid #3a86ff;
+            display: none;
+        }
+        
+        .game-display-area.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .game-display-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(58, 134, 255, 0.3);
+        }
+        
+        .game-display-header h2 {
+            color: #4cc9f0;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .back-to-center {
+            background: linear-gradient(to right, #f72585, #b5179e);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .back-to-center:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(247, 37, 133, 0.3);
+        }
+        
+        .game-container {
+            display: none;
+        }
+        
+        .game-container.active {
+            display: block;
+        }
+        
+        /* 游戏中心信息 */
+        .game-center-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .info-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #ff9e00;
+        }
+        
+        .info-card h3 {
+            color: #4cc9f0;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-card h3:before {
+            content: "★";
+            color: #ff9e00;
+        }
+        
+        .info-card p {
+            line-height: 1.7;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+        
+        /* 页脚 */
+        .game-center-footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            border-top: 2px solid #3a86ff;
+        }
+        
+        .game-center-footer p {
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .game-center-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .game-selection {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-display-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .game-stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .game-center-header h1 {
+                font-size: 2rem;
+            }
+            
+            .game-card-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .game-display-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .play-btn, .back-to-center {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-center-container">
+        <!-- 游戏中心头部 -->
+        <header class="game-center-header">
+            <h1>🎮 游戏中心</h1>
+            <p>欢迎来到游戏中心！这里汇集了经典好玩的游戏。选择你喜欢的游戏开始挑战吧！</p>
+        </header>
+        
+        <!-- 游戏选择区域 -->
+        <section class="game-selection">
+            <!-- 方块爆破游戏卡片 -->
+            <div class="game-card block active" data-game="block">
+                <div class="game-card-header">
+                    <h2>方块爆破</h2>
+                    <p>使用挡板反弹球消除所有方块，收集能量提升！</p>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">最高分</div>
+                            <div class="stat-value" id="block-high-score">0</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">最高关卡</div>
+                            <div class="stat-value" id="block-high-level">1</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">游戏次数</div>
+                            <div class="stat-value" id="block-play-count">0</div>
+                        </div>
+                    </div>
+                    <ul class="game-features">
+                        <li>多种能量提升效果</li>
+                        <li>渐进式难度关卡</li>
+                        <li>鼠标和键盘控制</li>
+                        <li>华丽的视觉效果</li>
+                    </ul>
+                </div>
+                <div class="game-card-footer">
+                    <button class="play-btn" data-game="block">开始游戏</button>
+                </div>
+            </div>
+            
+            <!-- 贪食蛇游戏卡片 -->
+            <div class="game-card snake" data-game="snake">
+                <div class="game-card-header">
+                    <h2>贪食蛇</h2>
+                    <p>控制蛇吃食物，避免撞墙和自己的身体！</p>
+                </div>
+                <div class="game-card-body">
+                    <div class="game-stats">
+                        <div class="stat-item">
+                            <div class="stat-label">最高分</div>
+                            <div class="stat-value" id="snake-high-score">0</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">最长长度</div>
+                            <div class="stat-value" id="snake-max-length">3</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">游戏次数</div>
+                            <div class="stat-value" id="snake-play-count">0</div>
+                        </div>
+                    </div>
+                    <ul class="game-features">
+                        <li>三种难度选择</li>
+                        <li>实时最高分记录</li>
+                        <li>方向键控制</li>
+                        <li>经典游戏体验</li>
+                    </ul>
+                </div>
+                <div class="game-card-footer">
+                    <button class="play-btn" data-game="snake">开始游戏</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 游戏展示区域 -->
+        <section class="game-display-area" id="game-display">
+            <div class="game-display-header">
+                <h2 id="current-game-title">方块爆破</h2>
+                <button class="back-to-center" id="back-to-center">返回游戏中心</button>
+            </div>
+            
+            <!-- 方块爆破游戏容器 -->
+            <div class="game-container" id="block-game-container">
+                <!-- 这里将嵌入block.html的游戏内容 -->
+                <div class="game-wrapper">
+                    <div class="game-header">
+                        <div class="stats-container">
+                            <div class="stat-box">
+                                <div class="stat-title">分数</div>
+                                <div class="stat-value" id="score">0</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-title">生命</div>
+                                <div class="stat-value" id="lives">3</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-title">关卡</div>
+                                <div class="stat-value" id="level">1</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="game-area">
+                        <canvas id="block-canvas" width="800" height="500"></canvas>
+                        
+                        <div class="powerup-active" id="powerup-active"></div>
+                        
+                        <div class="game-over" id="game-over">
+                            <h2>游戏结束!</h2>
+                            <p>最终得分: <span id="final-score">0</span></p>
+                            <button id="play-again-btn">再玩一次</button>
+                        </div>
+                        
+                        <div class="level-complete" id="level-complete">
+                            <h2>关卡完成!</h2>
+                            <p>进入下一关</p>
+                            <button id="next-level-btn">下一关</button>
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <button id="start-btn">开始游戏</button>
+                        <button id="pause-btn">暂停游戏</button>
+                        <button id="restart-btn">重新开始</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 贪食蛇游戏容器 -->
+            <div class="game-container" id="snake-game-container">
+                <!-- 这里将嵌入snake.html的游戏内容 -->
+                <div class="game-wrapper">
+                    <div class="game-header">
+                        <div class="score-container">
+                            <div class="score-title">当前分数</div>
+                            <div class="score-value" id="snake-score">0</div>
+                        </div>
+                        <div class="high-score-container">
+                            <div class="high-score-title">最高分数</div>
+                            <div class="high-score-value" id="snake-high-score-display">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="difficulty-selector">
+                        <button class="difficulty-btn active" data-speed="150">简单</button>
+                        <button class="difficulty-btn" data-speed="100">中等</button>
+                        <button class="difficulty-btn" data-speed="70">困难</button>
+                    </div>
+                    
+                    <div class="game-area">
+                        <canvas id="snake-canvas" width="600" height="400"></canvas>
+                        
+                        <div class="game-over" id="snake-game-over">
+                            <h2>游戏结束!</h2>
+                            <p>你的得分: <span id="snake-final-score">0</span></p>
+                            <button id="snake-play-again-btn">再玩一次</button>
+                        </div>
+                    </div>
+                    
+                    <div class="game-controls">
+                        <button id="snake-start-btn">开始游戏</button>
+                        <button id="snake-pause-btn">暂停游戏</button>
+                        <button id="snake-restart-btn">重新开始</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 游戏中心信息 -->
+        <section class="game-center-info">
+            <div class="info-card">
+                <h3>游戏特色</h3>
+                <p>我们的游戏中心提供两种经典游戏：方块爆破和贪食蛇。每个游戏都有独特的玩法和挑战。</p>
+                <p>所有游戏数据都会保存在本地，你可以随时查看自己的游戏记录和成就。</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>控制说明</h3>
+                <p><strong>方块爆破：</strong>使用鼠标或左右方向键移动挡板，空格键暂停游戏。</p>
+                <p><strong>贪食蛇：</strong>使用方向键控制蛇的移动方向，空格键暂停游戏。</p>
+                <p>两个游戏都支持移动设备触摸控制。</p>
+            </div>
+            
+            <div class="info-card">
+                <h3>游戏记录</h3>
+                <p>我们会记录你的游戏数据，包括最高分、游戏次数和成就。挑战自己，创造新纪录！</p>
+                <p>数据保存在浏览器本地存储中，清除浏览器数据会重置记录。</p>
+            </div>
+        </section>
+        
+        <!-- 页脚 -->
+        <footer class="game-center-footer">
+            <p>游戏中心 v1.0 | 方块爆破 & 贪食蛇融合版</p>
+            <p>© 2023 游戏中心 | 所有游戏仅供娱乐</p>
+        </footer>
+    </div>
+
+    <script>
+        // 游戏中心状态管理
+        const gameCenterState = {
+            currentGame: null,
+            games: {
+                block: {
+                    name: '方块爆破',
+                    highScore: localStorage.getItem('blockHighScore') || 0,
+                    highLevel: localStorage.getItem('blockHighLevel') || 1,
+                    playCount: localStorage.getItem('blockPlayCount') || 0
+                },
+                snake: {
+                    name: '贪食蛇',
+                    highScore: localStorage.getItem('snakeHighScore') || 0,
+                    maxLength: localStorage.getItem('snakeMaxLength') || 3,
+                    playCount: localStorage.getItem('snakePlayCount') || 0
+                }
+            }
+        };
+
+        // DOM元素
+        const gameDisplayArea = document.getElementById('game-display');
+        const currentGameTitle = document.getElementById('current-game-title');
+        const backToCenterBtn = document.getElementById('back-to-center');
+        const gameCards = document.querySelectorAll('.game-card');
+        const playButtons = document.querySelectorAll('.play-btn');
+
+        // 初始化游戏中心
+        function initGameCenter() {
+            // 更新游戏卡片上的统计数据
+            updateGameStats();
+            
+            // 添加事件监听器
+            playButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const game = this.getAttribute('data-game');
+                    startGame(game);
+                });
+            });
+            
+            gameCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const game = this.getAttribute('data-game');
+                    selectGameCard(game);
+                });
+            });
+            
+            backToCenterBtn.addEventListener('click', returnToGameCenter);
+            
+            // 默认选择第一个游戏卡片
+            selectGameCard('block');
+        }
+
+        // 更新游戏统计数据
+        function updateGameStats() {
+            // 更新方块爆破数据
+            document.getElementById('block-high-score').textContent = gameCenterState.games.block.highScore;
+            document.getElementById('block-high-level').textContent = gameCenterState.games.block.highLevel;
+            document.getElementById('block-play-count').textContent = gameCenterState.games.block.playCount;
+            
+            // 更新贪食蛇数据
+            document.getElementById('snake-high-score').textContent = gameCenterState.games.snake.highScore;
+            document.getElementById('snake-max-length').textContent = gameCenterState.games.snake.maxLength;
+            document.getElementById('snake-play-count').textContent = gameCenterState.games.snake.playCount;
+        }
+
+        // 选择游戏卡片
+        function selectGameCard(game) {
+            gameCards.forEach(card => {
+                card.classList.remove('active');
+                if (card.getAttribute('data-game') === game) {
+                    card.classList.add('active');
+                }
+            });
+        }
+
+        // 开始游戏
+        function startGame(game) {
+            gameCenterState.currentGame = game;
+            
+            // 更新游戏标题
+            currentGameTitle.textContent = gameCenterState.games[game].name;
+            
+            // 显示游戏展示区域
+            gameDisplayArea.classList.add('active');
+            
+            // 隐藏游戏选择区域
+            document.querySelector('.game-selection').style.display = 'none';
+            document.querySelector('.game-center-info').style.display = 'none';
+            document.querySelector('.game-center-footer').style.display = 'none';
+            
+            // 显示对应的游戏容器
+            document.querySelectorAll('.game-container').forEach(container => {
+                container.classList.remove('active');
+            });
+            
+            document.getElementById(`${game}-game-container`).classList.add('active');
+            
+            // 初始化游戏
+            if (game === 'block') {
+                initBlockGame();
+                // 更新游戏次数
+                gameCenterState.games.block.playCount++;
+                localStorage.setItem('blockPlayCount', gameCenterState.games.block.playCount);
+                updateGameStats();
+            } else if (game === 'snake') {
+                initSnakeGame();
+                // 更新游戏次数
+                gameCenterState.games.snake.playCount++;
+                localStorage.setItem('snakePlayCount', gameCenterState.games.snake.playCount);
+                updateGameStats();
+            }
+        }
+
+        // 返回游戏中心
+        function returnToGameCenter() {
+            // 隐藏游戏展示区域
+            gameDisplayArea.classList.remove('active');
+            
+            // 显示其他区域
+            document.querySelector('.game-selection').style.display = 'grid';
+            document.querySelector('.game-center-info').style.display = 'grid';
+            document.querySelector('.game-center-footer').style.display = 'block';
+            
+            // 停止当前游戏
+            if (gameCenterState.currentGame === 'block') {
+                stopBlockGame();
+            } else if (gameCenterState.currentGame === 'snake') {
+                stopSnakeGame();
+            }
+            
+            gameCenterState.currentGame = null;
+        }
+
+        // 方块爆破游戏逻辑
+        function initBlockGame() {
+            const canvas = document.getElementById('block-canvas');
+            const ctx = canvas.getContext('2d');
+            const scoreElement = document.getElementById('score');
+            const livesElement = document.getElementById('lives');
+            const levelElement = document.getElementById('level');
+            const finalScoreElement = document.getElementById('final-score');
+            const gameOverScreen = document.getElementById('game-over');
+            const levelCompleteScreen = document.getElementById('level-complete');
+            const powerupActiveElement = document.getElementById('powerup-active');
+            
+            // 游戏设置
+            const paddleHeight = 15;
+            const paddleMinWidth = 100;
+            const paddleMaxWidth = 200;
+            const ballSize = 12;
+            const brickRows = 8;
+            const brickCols = 10;
+            const brickPadding = 5;
+            const brickOffsetTop = 60;
+            const brickOffsetLeft = 35;
+            
+            // 游戏状态
+            let paddleWidth = 120;
+            let paddleX = (canvas.width - paddleWidth) / 2;
+            let ballX = canvas.width / 2;
+            let ballY = canvas.height - 50;
+            let ballSpeedX = 5;
+            let ballSpeedY = -5;
+            let ballSpeed = 5;
+            let score = 0;
+            let lives = 3;
+            let level = 1;
+            let gameRunning = false;
+            let gamePaused = false;
+            let rightPressed = false;
+            let leftPressed = false;
+            let animationId;
+            
+            // 方块数组
+            let bricks = [];
+            // 能量提升数组
+            let powerups = [];
+            
+            // 能量提升类型
+            const POWERUP_TYPES = {
+                EXTEND_PADDLE: { color: '#4cc9f0', name: '挡板扩大', duration: 10000 },
+                SPEED_BALL: { color: '#ff9e00', name: '球加速', duration: 8000 },
+                EXTRA_LIFE: { color: '#72efdd', name: '额外生命', duration: 0 },
+                PIERCE_BALL: { color: '#f72585', name: '穿透球', duration: 5000 }
+            };
+            
+            // 当前激活的能量提升
+            let activePowerup = null;
+            let powerupTimer = 0;
+            
+            // 初始化游戏
+            function initGame() {
+                // 初始化挡板和球
+                paddleWidth = 120;
+                paddleX = (canvas.width - paddleWidth) / 2;
+                ballX = canvas.width / 2;
+                ballY = canvas.height - 50;
+                ballSpeed = 5 + (level - 1) * 0.5;
+                ballSpeedX = ballSpeed;
+                ballSpeedY = -ballSpeed;
+                
+                // 初始化方块
+                initBricks();
+                
+                // 清空能量提升
+                powerups = [];
+                
+                // 重置能量提升状态
+                activePowerup = null;
+                powerupTimer = 0;
+                powerupActiveElement.style.display = 'none';
+                
+                // 更新显示
+                updateDisplay();
+                
+                // 绘制初始游戏状态
+                draw();
+            }
+            
+            // 初始化方块
+            function initBricks() {
+                bricks = [];
+                
+                // 不同关卡有不同的方块布局
+                let brickColors;
+                if (level === 1) {
+                    brickColors = ['#3a86ff', '#4361ee', '#4cc9f0', '#4895ef', '#7209b7'];
+                } else if (level === 2) {
+                    brickColors = ['#ff9e00', '#ff9100', '#ff8500', '#ff6d00', '#ff5400'];
+                } else {
+                    brickColors = ['#f72585', '#b5179e', '#7209b7', '#560bad', '#480ca8'];
+                }
+                
+                // 计算方块尺寸
+                const brickWidth = (canvas.width - 2 * brickOffsetLeft - (brickCols - 1) * brickPadding) / brickCols;
+                const brickHeight = 22;
+                
+                // 创建方块
+                for (let c = 0; c < brickCols; c++) {
+                    bricks[c] = [];
+                    for (let r = 0; r < brickRows; r++) {
+                        // 随机决定是否为特殊方块（掉落能量提升）
+                        const isPowerupBrick = Math.random() < 0.15 && r < brickRows - 2;
+                        
+                        bricks[c][r] = {
+                            x: c * (brickWidth + brickPadding) + brickOffsetLeft,
+                            y: r * (brickHeight + brickPadding) + brickOffsetTop,
+                            width: brickWidth,
+                            height: brickHeight,
+                            color: brickColors[r % brickColors.length],
+                            status: 1, // 1表示存在，0表示被摧毁
+                            isPowerupBrick: isPowerupBrick
+                        };
+                    }
+                }
+            }
+            
+            // 绘制游戏
+            function draw() {
+                // 清空画布
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // 绘制背景
+                drawBackground();
+                
+                // 绘制方块
+                drawBricks();
+                
+                // 绘制挡板
+                drawPaddle();
+                
+                // 绘制球
+                drawBall();
+                
+                // 绘制能量提升
+                drawPowerups();
+                
+                // 绘制能量提升激活提示
+                if (activePowerup) {
+                    const timeLeft = Math.ceil((powerupTimer - Date.now()) / 1000);
+                    if (timeLeft > 0) {
+                        powerupActiveElement.textContent = `${activePowerup.name} - ${timeLeft}秒`;
+                    }
+                }
+            }
+            
+            // 绘制背景
+            function drawBackground() {
+                // 渐变背景
+                const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                gradient.addColorStop(0, '#0a0e27');
+                gradient.addColorStop(1, '#1a1f4e');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // 绘制网格
+                ctx.strokeStyle = 'rgba(58, 134, 255, 0.1)';
+                ctx.lineWidth = 1;
+                
+                // 垂直线
+                for (let x = 0; x <= canvas.width; x += 40) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, canvas.height);
+                    ctx.stroke();
+                }
+                
+                // 水平线
+                for (let y = 0; y <= canvas.height; y += 40) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(canvas.width, y);
+                    ctx.stroke();
+                }
+            }
+            
+            // 绘制方块
+            function drawBricks() {
+                for (let c = 0; c < brickCols; c++) {
+                    for (let r = 0; r < brickRows; r++) {
+                        const brick = bricks[c][r];
+                        if (brick.status === 1) {
+                            // 绘制方块
+                            ctx.fillStyle = brick.color;
+                            ctx.fillRect(brick.x, brick.y, brick.width, brick.height);
+                            
+                            // 方块边框
+                            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+                            ctx.lineWidth = 2;
+                            ctx.strokeRect(brick.x, brick.y, brick.width, brick.height);
+                            
+                            // 如果是特殊方块，绘制特殊标记
+                            if (brick.isPowerupBrick) {
+                                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                                ctx.beginPath();
+                                ctx.arc(
+                                    brick.x + brick.width / 2,
+                                    brick.y + brick.height / 2,
+                                    brick.height / 4,
+                                    0,
+                                    Math.PI * 2
+                                );
+                                ctx.fill();
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // 绘制挡板
+            function drawPaddle() {
+                // 挡板渐变
+                const gradient = ctx.createLinearGradient(paddleX, canvas.height - paddleHeight, paddleX, canvas.height);
+                gradient.addColorStop(0, '#3a86ff');
+                gradient.addColorStop(1, '#4361ee');
+                ctx.fillStyle = gradient;
+                
+                // 绘制挡板
+                ctx.beginPath();
+                ctx.roundRect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight, 10);
+                ctx.fill();
+                
+                // 挡板边框
+                ctx.strokeStyle = '#4cc9f0';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // 挡板内部装饰
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.fillRect(paddleX + 10, canvas.height - paddleHeight + 5, paddleWidth - 20, 3);
+            }
+            
+            // 绘制球
+            function drawBall() {
+                // 根据能量提升状态改变球的颜色
+                let ballColor = '#ffffff';
+                if (activePowerup && activePowerup.name === POWERUP_TYPES.PIERCE_BALL.name) {
+                    ballColor = '#f72585';
+                } else if (activePowerup && activePowerup.name === POWERUP_TYPES.SPEED_BALL.name) {
+                    ballColor = '#ff9e00';
+                }
+                
+                // 球体渐变
+                const gradient = ctx.createRadialGradient(
+                    ballX, ballY, 0,
+                    ballX, ballY, ballSize
+                );
+                gradient.addColorStop(0, ballColor);
+                gradient.addColorStop(1, darkenColor(ballColor, 40));
+                
+                ctx.fillStyle = gradient;
+                
+                // 绘制球
+                ctx.beginPath();
+                ctx.arc(ballX, ballY, ballSize, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // 球体高光
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+                ctx.beginPath();
+                ctx.arc(ballX - ballSize/3, ballY - ballSize/3, ballSize/3, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // 绘制能量提升
+            function drawPowerups() {
+                for (let i = 0; i < powerups.length; i++) {
+                    const powerup = powerups[i];
+                    
+                    // 绘制能量提升
+                    ctx.fillStyle = powerup.color;
+                    ctx.beginPath();
+                    ctx.arc(powerup.x, powerup.y, 8, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // 能量提升边框
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                    
+                    // 能量提升发光效果
+                    ctx.shadowColor = powerup.color;
+                    ctx.shadowBlur = 10;
+                    ctx.beginPath();
+                    ctx.arc(powerup.x, powerup.y, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+            }
+            
+            // 更新游戏状态
+            function update() {
+                // 移动挡板
+                if (rightPressed && paddleX < canvas.width - paddleWidth) {
+                    paddleX += 7;
+                } else if (leftPressed && paddleX > 0) {
+                    paddleX -= 7;
+                }
+                
+                // 移动球
+                ballX += ballSpeedX;
+                ballY += ballSpeedY;
+                
+                // 检测球与墙壁碰撞
+                // 左右墙
+                if (ballX + ballSpeedX > canvas.width - ballSize || ballX + ballSpeedX < ballSize) {
+                    ballSpeedX = -ballSpeedX;
+                }
+                
+                // 上墙
+                if (ballY + ballSpeedY < ballSize) {
+                    ballSpeedY = -ballSpeedY;
+                }
+                
+                // 下墙（掉出屏幕）
+                else if (ballY + ballSpeedY > canvas.height - ballSize) {
+                    // 检测球与挡板碰撞
+                    if (ballX > paddleX && ballX < paddleX + paddleWidth) {
+                        // 根据击中挡板的位置改变反弹角度
+                        const hitPoint = (ballX - paddleX) / paddleWidth;
+                        const angle = hitPoint * Math.PI - Math.PI / 2; // -90° 到 90°
+                        
+                        // 计算新的速度
+                        const speed = Math.sqrt(ballSpeedX * ballSpeedX + ballSpeedY * ballSpeedY);
+                        ballSpeedX = speed * Math.cos(angle);
+                        ballSpeedY = -speed * Math.sin(angle);
+                    } else {
