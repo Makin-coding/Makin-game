@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>游�?中�? - ?��??�破 & 贪�???/title>
+    <title>游戏中心 - 方块爆破 & 贪食蛇</title>
     <style>
-        /* ===== ?�用?��? ===== */
+        /* ===== 通用样式 ===== */
         * {
             margin: 0;
             padding: 0;
@@ -25,7 +25,7 @@
             display: none !important;
         }
         
-        /* ===== 游�?中�?容器 ===== */
+        /* ===== 游戏中心容器 ===== */
         .game-center-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -60,7 +60,7 @@
             line-height: 1.6;
         }
         
-        /* ===== 游�??�择?��? ===== */
+        /* ===== 游戏选择区域 ===== */
         .game-selection {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -181,13 +181,13 @@
         }
         
         .game-card.block .game-features li:before {
-            content: "??;
+            content: "✓";
             color: #3a86ff;
             font-weight: bold;
         }
         
         .game-card.snake .game-features li:before {
-            content: "??;
+            content: "✓";
             color: #4CAF50;
             font-weight: bold;
         }
@@ -224,7 +224,7 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
         
-        /* ===== 游�?展示?��? ===== */
+        /* ===== 游戏展示区域 ===== */
         .game-display-area {
             background-color: rgba(0, 0, 0, 0.7);
             border-radius: 20px;
@@ -265,14 +265,14 @@
             box-shadow: 0 8px 15px rgba(247, 37, 133, 0.3);
         }
         
-        /* ===== 游�?容器?��? ===== */
+        /* ===== 游戏容器样式 ===== */
         .game-wrapper {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
         
-        /* ?��??�破游�??��? */
+        /* 方块爆破游戏样式 */
         #block-game .game-header {
             display: flex;
             justify-content: center;
@@ -387,7 +387,7 @@
             box-shadow: 0 9px 0 #8a126e;
         }
         
-        /* 贪�??�游?�样�?*/
+        /* 贪食蛇游戏样式 */
         #snake-game .game-header {
             display: flex;
             justify-content: space-between;
@@ -506,7 +506,7 @@
             background-color: #d32f2f;
         }
         
-        /* ===== 游�?覆�?�?===== */
+        /* ===== 游戏覆盖层 ===== */
         .game-overlay {
             position: absolute;
             top: 0;
@@ -577,7 +577,7 @@
             100% { transform: translateX(-50%) scale(1); }
         }
         
-        /* ===== 游�?中�?信息 ===== */
+        /* ===== 游戏中心信息 ===== */
         .game-center-info {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -602,7 +602,7 @@
         }
         
         .info-card h3:before {
-            content: "??;
+            content: "★";
             color: #ff9e00;
         }
         
@@ -612,7 +612,7 @@
             margin-bottom: 15px;
         }
         
-        /* ===== 页�? ===== */
+        /* ===== 页脚 ===== */
         .game-center-footer {
             text-align: center;
             padding: 25px;
@@ -627,7 +627,7 @@
             margin-bottom: 10px;
         }
         
-        /* ===== ?��?式设�?===== */
+        /* ===== 响应式设计 ===== */
         @media (max-width: 768px) {
             .game-center-header h1 {
                 font-size: 2.5rem;
@@ -704,102 +704,102 @@
 </head>
 <body>
     <div class="game-center-container">
-        <!-- 游�?中�?头部 -->
+        <!-- 游戏中心头部 -->
         <header class="game-center-header">
-            <h1>?�� 游�?中�?</h1>
-            <p>欢�??�到游�?中�?！�??��??��?经典好玩?�游?�。选择你�?欢�?游�?开始�??�吧�?/p>
+            <h1>🎮 游戏中心</h1>
+            <p>欢迎来到游戏中心！这里汇集了经典好玩的游戏。选择你喜欢的游戏开始挑战吧！</p>
         </header>
         
-        <!-- 游�??�择?��? -->
+        <!-- 游戏选择区域 -->
         <section class="game-selection" id="game-selection">
-            <!-- ?��??�破游�??��? -->
+            <!-- 方块爆破游戏卡片 -->
             <div class="game-card block active" data-game="block">
                 <div class="game-card-header">
-                    <h2>?��??�破</h2>
-                    <p>使用?�板?�弹?��??��??�方?��??��??��??��?�?/p>
+                    <h2>方块爆破</h2>
+                    <p>使用挡板反弹球消除所有方块，收集能量提升！</p>
                 </div>
                 <div class="game-card-body">
                     <div class="game-stats">
                         <div class="stat-item">
-                            <div class="stat-label">?�高�?</div>
+                            <div class="stat-label">最高分</div>
                             <div class="stat-value" id="block-high-score-display">0</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-label">?�高关??/div>
+                            <div class="stat-label">最高关卡</div>
                             <div class="stat-value" id="block-high-level-display">1</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-label">游�?次数</div>
+                            <div class="stat-label">游戏次数</div>
                             <div class="stat-value" id="block-play-count-display">0</div>
                         </div>
                     </div>
                     <ul class="game-features">
-                        <li>多�??��??��??��?</li>
-                        <li>渐�?式难度关??/li>
-                        <li>鼠�??�键?�控??/li>
-                        <li>?�丽?��?觉�???/li>
+                        <li>多种能量提升效果</li>
+                        <li>渐进式难度关卡</li>
+                        <li>鼠标和键盘控制</li>
+                        <li>华丽的视觉效果</li>
                     </ul>
                 </div>
                 <div class="game-card-footer">
-                    <button class="play-btn" data-game="block">开始游??/button>
+                    <button class="play-btn" data-game="block">开始游戏</button>
                 </div>
             </div>
             
-            <!-- 贪�??�游?�卡??-->
+            <!-- 贪食蛇游戏卡片 -->
             <div class="game-card snake" data-game="snake">
                 <div class="game-card-header">
-                    <h2>贪�???/h2>
-                    <p>?�制?��?食物，避?��?墙�??�己?�身体�?</p>
+                    <h2>贪食蛇</h2>
+                    <p>控制蛇吃食物，避免撞墙和自己的身体！</p>
                 </div>
                 <div class="game-card-body">
                     <div class="game-stats">
                         <div class="stat-item">
-                            <div class="stat-label">?�高�?</div>
+                            <div class="stat-label">最高分</div>
                             <div class="stat-value" id="snake-high-score-display">0</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-label">?�?�长�?/div>
+                            <div class="stat-label">最长长度</div>
                             <div class="stat-value" id="snake-max-length-display">3</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-label">游�?次数</div>
+                            <div class="stat-label">游戏次数</div>
                             <div class="stat-value" id="snake-play-count-display">0</div>
                         </div>
                     </div>
                     <ul class="game-features">
-                        <li>三�??�度?�择</li>
-                        <li>实时?�高�?记�?</li>
-                        <li>?��??�控??/li>
-                        <li>经典游�?体�?</li>
+                        <li>三种难度选择</li>
+                        <li>实时最高分记录</li>
+                        <li>方向键控制</li>
+                        <li>经典游戏体验</li>
                     </ul>
                 </div>
                 <div class="game-card-footer">
-                    <button class="play-btn" data-game="snake">开始游??/button>
+                    <button class="play-btn" data-game="snake">开始游戏</button>
                 </div>
             </div>
         </section>
         
-        <!-- 游�?展示?��? -->
+        <!-- 游戏展示区域 -->
         <section class="game-display-area hidden" id="game-display">
             <div class="game-display-header">
-                <h2 id="current-game-title">?��??�破</h2>
-                <button class="back-to-center" id="back-to-center">返�?游�?中�?</button>
+                <h2 id="current-game-title">方块爆破</h2>
+                <button class="back-to-center" id="back-to-center">返回游戏中心</button>
             </div>
             
-            <!-- ?��??�破游�?容器 -->
+            <!-- 方块爆破游戏容器 -->
             <div class="game-wrapper hidden" id="block-game">
                 <div class="game-header">
                     <div class="stats-container">
                         <div class="stat-box">
-                            <div class="stat-title">?�数</div>
+                            <div class="stat-title">分数</div>
                             <div class="stat-value" id="score">0</div>
                         </div>
                         <div class="stat-box">
-                            <div class="stat-title">?�命</div>
+                            <div class="stat-title">生命</div>
                             <div class="stat-value" id="lives">3</div>
                         </div>
                         <div class="stat-box">
-                            <div class="stat-title">?�卡</div>
+                            <div class="stat-title">关卡</div>
                             <div class="stat-value" id="level">1</div>
                         </div>
                     </div>
@@ -811,105 +811,105 @@
                     <div class="powerup-active" id="powerup-active"></div>
                     
                     <div class="game-overlay game-over" id="block-game-over">
-                        <h2>游�?结�?!</h2>
-                        <p>?�终�??? <span id="block-final-score">0</span></p>
-                        <button id="block-play-again-btn">?�玩一�?/button>
+                        <h2>游戏结束!</h2>
+                        <p>最终得分: <span id="block-final-score">0</span></p>
+                        <button id="block-play-again-btn">再玩一次</button>
                     </div>
                     
                     <div class="game-overlay level-complete" id="block-level-complete">
-                        <h2>?�卡完�?!</h2>
-                        <p>进入下�???/p>
-                        <button id="block-next-level-btn">下�???/button>
+                        <h2>关卡完成!</h2>
+                        <p>进入下一关</p>
+                        <button id="block-next-level-btn">下一关</button>
                     </div>
                 </div>
                 
                 <div class="game-controls">
-                    <button id="block-start-btn">开始游??/button>
-                    <button id="block-pause-btn">?��?游�?</button>
-                    <button id="block-restart-btn">?�新开�?/button>
+                    <button id="block-start-btn">开始游戏</button>
+                    <button id="block-pause-btn">暂停游戏</button>
+                    <button id="block-restart-btn">重新开始</button>
                 </div>
             </div>
             
-            <!-- 贪�??�游?�容??-->
+            <!-- 贪食蛇游戏容器 -->
             <div class="game-wrapper hidden" id="snake-game">
                 <div class="game-header">
                     <div class="score-container">
-                        <div class="score-title">当�??�数</div>
+                        <div class="score-title">当前分数</div>
                         <div class="score-value" id="snake-score">0</div>
                     </div>
                     <div class="high-score-container">
-                        <div class="high-score-title">?�高�???/div>
+                        <div class="high-score-title">最高分数</div>
                         <div class="high-score-value" id="snake-high-score-game">0</div>
                     </div>
                 </div>
                 
                 <div class="difficulty-selector">
-                    <button class="difficulty-btn active" data-speed="150">简??/button>
-                    <button class="difficulty-btn" data-speed="100">中�?</button>
-                    <button class="difficulty-btn" data-speed="70">?�难</button>
+                    <button class="difficulty-btn active" data-speed="150">简单</button>
+                    <button class="difficulty-btn" data-speed="100">中等</button>
+                    <button class="difficulty-btn" data-speed="70">困难</button>
                 </div>
                 
                 <div class="game-area">
                     <canvas id="snake-canvas" width="600" height="400"></canvas>
                     
                     <div class="game-overlay game-over" id="snake-game-over">
-                        <h2>游�?结�?!</h2>
-                        <p>你�?得�?: <span id="snake-final-score">0</span></p>
-                        <button id="snake-play-again-btn">?�玩一�?/button>
+                        <h2>游戏结束!</h2>
+                        <p>你的得分: <span id="snake-final-score">0</span></p>
+                        <button id="snake-play-again-btn">再玩一次</button>
                     </div>
                 </div>
                 
                 <div class="game-controls">
-                    <button id="snake-start-btn">开始游??/button>
-                    <button id="snake-pause-btn">?��?游�?</button>
-                    <button id="snake-restart-btn">?�新开�?/button>
+                    <button id="snake-start-btn">开始游戏</button>
+                    <button id="snake-pause-btn">暂停游戏</button>
+                    <button id="snake-restart-btn">重新开始</button>
                 </div>
             </div>
         </section>
         
-        <!-- 游�?中�?信息 -->
+        <!-- 游戏中心信息 -->
         <section class="game-center-info" id="game-center-info">
             <div class="info-card">
-                <h3>游�??�色</h3>
-                <p>?�们?�游?�中心�?供两种�??�游?��??��??�破?�贪食�??��?个游?�都?�独?��??��??��??��?/p>
-                <p>?�?�游?�数?�都会�?存在?�地，�??�以?�时?��??�己?�游?�记录�??�就??/p>
+                <h3>游戏特色</h3>
+                <p>我们的游戏中心提供两种经典游戏：方块爆破和贪食蛇。每个游戏都有独特的玩法和挑战。</p>
+                <p>所有游戏数据都会保存在本地，你可以随时查看自己的游戏记录和成就。</p>
             </div>
             
             <div class="info-card">
-                <h3>?�制说�?</h3>
-                <p><strong>?��??�破�?/strong>使用鼠�??�左?�方?�键移动?�板，空?�键?��?游�???/p>
-                <p><strong>贪�??��?</strong>使用?��??�控?��??�移?�方?��?空格?��??�游?��?/p>
-                <p>两个游�??�支?�移?�设备触?�控?��?/p>
+                <h3>控制说明</h3>
+                <p><strong>方块爆破：</strong>使用鼠标或左右方向键移动挡板，空格键暂停游戏。</p>
+                <p><strong>贪食蛇：</strong>使用方向键控制蛇的移动方向，空格键暂停游戏。</p>
+                <p>两个游戏都支持移动设备触摸控制。</p>
             </div>
             
             <div class="info-card">
-                <h3>游�?记�?</h3>
-                <p>?�们会记录�??�游?�数?��??�括?�高�??�游?�次?��??�就?��??�自己�??�造新纪�?�?/p>
-                <p>?�据保�??��?览器?�地存储中�?清除浏�??�数?��??�置记�???/p>
+                <h3>游戏记录</h3>
+                <p>我们会记录你的游戏数据，包括最高分、游戏次数和成就。挑战自己，创造新纪录！</p>
+                <p>数据保存在浏览器本地存储中，清除浏览器数据会重置记录。</p>
             </div>
         </section>
         
-        <!-- 页�? -->
+        <!-- 页脚 -->
         <footer class="game-center-footer" id="game-center-footer">
-            <p>游�?中�? v1.0 | ?��??�破 & 贪�??��??��?</p>
-            <p>© 2023 游�?中�? | ?�?�游?��?供娱�?/p>
+            <p>游戏中心 v1.0 | 方块爆破 & 贪食蛇融合版</p>
+            <p>© 2023 游戏中心 | 所有游戏仅供娱乐</p>
         </footer>
     </div>
 
     <script>
-        // ===== 游�?中�??�态管??=====
+        // ===== 游戏中心状态管理 =====
         const GameCenter = {
             currentGame: null,
             games: {
                 block: {
-                    name: '?��??�破',
+                    name: '方块爆破',
                     highScore: 0,
                     highLevel: 1,
                     playCount: 0,
                     maxLength: 0
                 },
                 snake: {
-                    name: '贪�???,
+                    name: '贪食蛇',
                     highScore: 0,
                     playCount: 0,
                     maxLength: 3
@@ -940,7 +940,7 @@
                         }
                     }
                 } catch (e) {
-                    console.error('?�载游�??�据失败:', e);
+                    console.error('加载游戏数据失败:', e);
                 }
             },
             
@@ -960,12 +960,12 @@
                     };
                     localStorage.setItem('gameCenterData', JSON.stringify(data));
                 } catch (e) {
-                    console.error('保�?游�??�据失败:', e);
+                    console.error('保存游戏数据失败:', e);
                 }
             },
             
             bindEvents: function() {
-                // 游�??��??�择
+                // 游戏卡片选择
                 document.querySelectorAll('.game-card').forEach(card => {
                     card.addEventListener('click', (e) => {
                         if (!e.target.classList.contains('play-btn')) {
@@ -975,7 +975,7 @@
                     });
                 });
                 
-                // 开始游?��???
+                // 开始游戏按钮
                 document.querySelectorAll('.play-btn').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const game = e.target.getAttribute('data-game');
@@ -983,7 +983,7 @@
                     });
                 });
                 
-                // 返�?游�?中�??�钮
+                // 返回游戏中心按钮
                 document.getElementById('back-to-center').addEventListener('click', () => {
                     this.returnToGameCenter();
                 });
@@ -997,12 +997,12 @@
             },
             
             updateGameStatsDisplay: function() {
-                // ?�新?��??�破?�据
+                // 更新方块爆破数据
                 document.getElementById('block-high-score-display').textContent = this.games.block.highScore;
                 document.getElementById('block-high-level-display').textContent = this.games.block.highLevel;
                 document.getElementById('block-play-count-display').textContent = this.games.block.playCount;
                 
-                // ?�新贪�??�数??
+                // 更新贪食蛇数据
                 document.getElementById('snake-high-score-display').textContent = this.games.snake.highScore;
                 document.getElementById('snake-max-length-display').textContent = this.games.snake.maxLength;
                 document.getElementById('snake-play-count-display').textContent = this.games.snake.playCount;
@@ -1011,26 +1011,26 @@
             startGame: function(game) {
                 this.currentGame = game;
                 
-                // ?�新游�??��?
+                // 更新游戏标题
                 document.getElementById('current-game-title').textContent = this.games[game].name;
                 
-                // ?�示游�?展示?��?，�??�其他区??
+                // 显示游戏展示区域，隐藏其他区域
                 document.getElementById('game-selection').classList.add('hidden');
                 document.getElementById('game-center-info').classList.add('hidden');
                 document.getElementById('game-center-footer').classList.add('hidden');
                 document.getElementById('game-display').classList.remove('hidden');
                 
-                // ?��??�?�游?��??�示当�?游�?
+                // 隐藏所有游戏，显示当前游戏
                 document.getElementById('block-game').classList.add('hidden');
                 document.getElementById('snake-game').classList.add('hidden');
                 document.getElementById(`${game}-game`).classList.remove('hidden');
                 
-                // ?�新游�?次数
+                // 更新游戏次数
                 this.games[game].playCount++;
                 this.saveGameData();
                 this.updateGameStatsDisplay();
                 
-                // ?��??�游??
+                // 初始化游戏
                 if (game === 'block') {
                     BlockGame.init();
                 } else if (game === 'snake') {
@@ -1039,14 +1039,14 @@
             },
             
             returnToGameCenter: function() {
-                // ?�止当�?游�?
+                // 停止当前游戏
                 if (this.currentGame === 'block') {
                     BlockGame.stop();
                 } else if (this.currentGame === 'snake') {
                     SnakeGame.stop();
                 }
                 
-                // ?�示游�?中�?，�??�游?��?示区??
+                // 显示游戏中心，隐藏游戏展示区域
                 document.getElementById('game-selection').classList.remove('hidden');
                 document.getElementById('game-center-info').classList.remove('hidden');
                 document.getElementById('game-center-footer').classList.remove('hidden');
@@ -1077,808 +1077,393 @@
                 this.updateGameStatsDisplay();
             },
             
-            // ?��??�游?�中�?
+            // 初始化游戏中心
             init: function() {
                 this.loadGameData();
                 this.updateGameStatsDisplay();
                 this.bindEvents();
                 
-                // 添�? roundRect polyfill ?��?绘制?��??�板
-                if (!CanvasRenderingContext2D.prototype.roundRect) {
-                    CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
-                        if (width < 2 * radius) radius = width / 2;
-                        if (height < 2 * radius) radius = height / 2;
-                        this.beginPath();
-                        this.moveTo(x + radius, y);
-                        this.arcTo(x + width, y, x + width, y + height, radius);
-                        this.arcTo(x + width, y + height, x, y + height, radius);
-                        this.arcTo(x, y + height, x, y, radius);
-                        this.arcTo(x, y, x + width, y, radius);
-                        this.closePath();
-                        return this;
-                    };
-                }
-
-                // ?��??�游?�对�?
+                // 初始化游戏对象
                 BlockGame = {
-    gameRunning: false,
-    gamePaused: false,
-    animationId: null,
-    score: 0,
-    level: 1,
-    lives: 3,
-    
-    // Game settings
-    paddleHeight: 15,
-    paddleMinWidth: 100,
-    paddleMaxWidth: 200,
-    ballSize: 12,
-    brickRows: 8,
-    brickCols: 10,
-    brickPadding: 5,
-    brickOffsetTop: 60,
-    brickOffsetLeft: 35,
-    
-    // Game state
-    paddleWidth: 120,
-    paddleX: 0,
-    ballX: 0,
-    ballY: 0,
-    ballSpeedX: 0,
-    ballSpeedY: 0,
-    ballSpeed: 5,
-    rightPressed: false,
-    leftPressed: false,
-    
-    // Bricks and power-ups
-    bricks: [],
-    powerups: [],
-    
-    // Power-up types
-    POWERUP_TYPES: {
-        EXTEND_PADDLE: { color: '#4cc9f0', name: '?�板?�大', duration: 10000 },
-        SPEED_BALL: { color: '#ff9e00', name: '?��???, duration: 8000 },
-        EXTRA_LIFE: { color: '#72efdd', name: '额�??�命', duration: 0 },
-        PIERCE_BALL: { color: '#f72585', name: '穿透�?', duration: 5000 }
-    },
-    
-    activePowerup: null,
-    powerupTimer: 0,
-    
-    init: function() {
-        console.log('?��??�破游�??��??��?增强?��?');
-        // ?��??��??��?下�?
-        const canvas = document.getElementById('block-canvas');
-        const ctx = canvas.getContext('2d');
-        
-        // 设置?��?游�??��?
-        canvas.style.display = 'block';
-        this.canvas = canvas;
-        this.ctx = ctx;
-        
-        // ?��??�游?��???
-        this.paddleWidth = 120;
-        this.paddleX = (canvas.width - this.paddleWidth) / 2;
-        this.ballX = canvas.width / 2;
-        this.ballY = canvas.height - 50;
-        this.ballSpeed = 5;
-        this.ballSpeedX = this.ballSpeed;
-        this.ballSpeedY = -this.ballSpeed;
-        
-        // ?��??�方??
-        this.initBricks();
-        
-        // 清空?��??��?
-        this.powerups = [];
-        this.activePowerup = null;
-        this.powerupTimer = 0;
-        document.getElementById('powerup-active').style.display = 'none';
-        
-        // 绑�?游�??�制?�钮事件
-        document.getElementById('block-start-btn').addEventListener('click', () => {
-            this.startGame();
-        });
-        
-        document.getElementById('block-pause-btn').addEventListener('click', () => {
-            this.togglePause();
-        });
-        
-        document.getElementById('block-restart-btn').addEventListener('click', () => {
-            this.restartGame();
-        });
-        
-        document.getElementById('block-play-again-btn').addEventListener('click', () => {
-            this.restartGame();
-        });
-        
-        document.getElementById('block-next-level-btn').addEventListener('click', () => {
-            this.nextLevel();
-        });
-        
-        // 绑�??��??�制
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Right' || e.key === 'ArrowRight') {
-                this.rightPressed = true;
-            } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
-                this.leftPressed = true;
-            } else if (e.code === 'Space') {
-                e.preventDefault();
-                this.togglePause();
-            }
-        });
-        
-        document.addEventListener('keyup', (e) => {
-            if (e.key === 'Right' || e.key === 'ArrowRight') {
-                this.rightPressed = false;
-            } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
-                this.leftPressed = false;
-            }
-        });
-        
-        // 绑�?鼠�?移动事件
-        canvas.addEventListener('mousemove', (e) => {
-            if (!this.gameRunning || this.gamePaused) return;
-            
-            const relativeX = e.clientX - canvas.getBoundingClientRect().left;
-            if (relativeX > 0 && relativeX < canvas.width) {
-                this.paddleX = relativeX - this.paddleWidth / 2;
-                
-                // 确�??�板不�??�画�?
-                if (this.paddleX < 0) {
-                    this.paddleX = 0;
-                } else if (this.paddleX > canvas.width - this.paddleWidth) {
-                    this.paddleX = canvas.width - this.paddleWidth;
-                }
-            }
-        });
-        
-        // 绘制?��?游�??�面
-        this.drawInitialScreen();
-    },
-    
-    initBricks: function() {
-        this.bricks = [];
-        
-        // 不�??�卡?��??��??��?布�?
-        let brickColors;
-        if (this.level === 1) {
-            brickColors = ['#3a86ff', '#4361ee', '#4cc9f0', '#4895ef', '#7209b7'];
-        } else if (this.level === 2) {
-            brickColors = ['#ff9e00', '#ff9100', '#ff8500', '#ff6d00', '#ff5400'];
-        } else {
-            brickColors = ['#f72585', '#b5179e', '#7209b7', '#560bad', '#480ca8'];
-        }
-        
-        // 计�??��?尺寸
-        const brickWidth = (this.canvas.width - 2 * this.brickOffsetLeft - (this.brickCols - 1) * this.brickPadding) / this.brickCols;
-        const brickHeight = 22;
-        
-        // ?�建?��?
-        for (let c = 0; c < this.brickCols; c++) {
-            this.bricks[c] = [];
-            for (let r = 0; r < this.brickRows; r++) {
-                // ?�机?��??�否为特殊方?��??�落?��??��?�?
-                const isPowerupBrick = Math.random() < 0.15 && r < this.brickRows - 2;
-                
-                this.bricks[c][r] = {
-                    x: c * (brickWidth + this.brickPadding) + this.brickOffsetLeft,
-                    y: r * (brickHeight + this.brickPadding) + this.brickOffsetTop,
-                    width: brickWidth,
-                    height: brickHeight,
-                    color: brickColors[r % brickColors.length],
-                    status: 1, // 1表示存在�?表示被摧�?
-                    isPowerupBrick: isPowerupBrick
-                };
-            }
-        }
-    },
-    
-    drawInitialScreen: function() {
-        this.ctx.fillStyle = '#0f0c29';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        this.ctx.fillStyle = '#3a86ff';
-        this.ctx.font = '24px Arial';
-        this.ctx.textAlign = 'center';
-        this.ctx.fillText('?��??�破游�?（�?强�?�?, this.canvas.width/2, this.canvas.height/2 - 30);
-        this.ctx.font = '16px Arial';
-        this.ctx.fillText('?�击"开始游???�钮开始游??, this.canvas.width/2, this.canvas.height/2 + 20);
-        this.ctx.fillText('使用鼠�??�方?�键移动?�板', this.canvas.width/2, this.canvas.height/2 + 50);
-        this.ctx.fillText('空格?��??�游??, this.canvas.width/2, this.canvas.height/2 + 80);
-    },
-    
-    startGame: function() {
-        if (!this.gameRunning) {
-            this.gameRunning = true;
-            this.gamePaused = false;
-            this.score = 0;
-            this.lives = 3;
-            this.level = 1;
-            
-            // ?�新?�示
-            this.updateDisplay();
-            
-            // ?��??�游?�状??
-            this.paddleWidth = 120;
-            this.paddleX = (this.canvas.width - this.paddleWidth) / 2;
-            this.ballX = this.canvas.width / 2;
-            this.ballY = this.canvas.height - 50;
-            this.ballSpeed = 5 + (this.level - 1) * 0.5;
-            this.ballSpeedX = this.ballSpeed;
-            this.ballSpeedY = -this.ballSpeed;
-            
-            this.initBricks();
-            this.powerups = [];
-            this.activePowerup = null;
-            this.powerupTimer = 0;
-            document.getElementById('powerup-active').style.display = 'none';
-            
-            // ?��?游�?结�??�关?��??��???
-            document.getElementById('block-game-over').classList.add('hidden');
-            document.getElementById('block-level-complete').classList.add('hidden');
-            
-            // 开始游?�循??
-            this.gameLoop();
-        }
-    },
-    
-    gameLoop: function() {
-        if (!this.gameRunning || this.gamePaused) {
-            return;
-        }
-        
-        this.update();
-        this.draw();
-        
-        if (this.gameRunning && !this.gamePaused) {
-            this.animationId = requestAnimationFrame(() => this.gameLoop());
-        }
-    },
-    
-    update: function() {
-        // 移动?�板
-        if (this.rightPressed && this.paddleX < this.canvas.width - this.paddleWidth) {
-            this.paddleX += 7;
-        } else if (this.leftPressed && this.paddleX > 0) {
-            this.paddleX -= 7;
-        }
-        
-        // 移动??
-        this.ballX += this.ballSpeedX;
-        this.ballY += this.ballSpeedY;
-        
-        // 检测�?与�?壁碰??
-        // 左右�?
-        if (this.ballX + this.ballSpeedX > this.canvas.width - this.ballSize || this.ballX + this.ballSpeedX < this.ballSize) {
-            this.ballSpeedX = -this.ballSpeedX;
-        }
-        
-        // 上�?
-        if (this.ballY + this.ballSpeedY < this.ballSize) {
-            this.ballSpeedY = -this.ballSpeedY;
-        }
-        
-        // 下�?（�??��?幕�?
-        else if (this.ballY + this.ballSpeedY > this.canvas.height - this.ballSize) {
-            // 检测�?与挡?�碰??
-            if (this.ballX > this.paddleX && this.ballX < this.paddleX + this.paddleWidth) {
-                // ?�据?�中?�板?��?置改?��?弹�?�?
-                const hitPoint = (this.ballX - this.paddleX) / this.paddleWidth;
-                const angle = hitPoint * Math.PI - Math.PI / 2; // -90° ??90°
-                
-                // 计�??��??�度
-                const speed = Math.sqrt(this.ballSpeedX * this.ballSpeedX + this.ballSpeedY * this.ballSpeedY);
-                this.ballSpeedX = speed * Math.cos(angle);
-                this.ballSpeedY = -speed * Math.sin(angle);
-            } else {
-                // ?��??��?幕�?失去一?��???
-                this.loseLife();
-                return;
-            }
-        }
-        
-        // 检测�?与方?�碰??
-        this.detectBrickCollision();
-        
-        // ?�新?��??��?位置
-        this.updatePowerups();
-        
-        // 检?�能?��??�是?��???
-        this.checkPowerupExpiry();
-        
-        // 检?�是?��??�关??
-        if (this.checkLevelComplete()) {
-            this.levelComplete();
-            return;
-        }
-    },
-    
-    detectBrickCollision: function() {
-        for (let c = 0; c < this.brickCols; c++) {
-            for (let r = 0; r < this.brickRows; r++) {
-                const brick = this.bricks[c][r];
-                if (brick.status === 1) {
-                    // 检测碰??
-                    if (
-                        this.ballX > brick.x &&
-                        this.ballX < brick.x + brick.width &&
-                        this.ballY > brick.y &&
-                        this.ballY < brick.y + brick.height
-                    ) {
-                        // 如�??��?穿透能?��?不改?�方??
-                        if (!this.activePowerup || this.activePowerup.name !== this.POWERUP_TYPES.PIERCE_BALL.name) {
-                            // 确�?从哪边碰??
-                            const prevX = this.ballX - this.ballSpeedX;
-                            const prevY = this.ballY - this.ballSpeedY;
+                    gameRunning: false,
+                    gamePaused: false,
+                    animationId: null,
+                    score: 0,
+                    level: 1,
+                    lives: 3,
+                    
+                    init: function() {
+                        console.log('方块爆破游戏初始化');
+                        // 获取画布和上下文
+                        const canvas = document.getElementById('block-canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // 设置初始游戏状态
+                        canvas.style.display = 'block';
+                        this.canvas = canvas;
+                        this.ctx = ctx;
+                        
+                        // 游戏变量
+                        this.paddleWidth = 120;
+                        this.paddleX = (canvas.width - this.paddleWidth) / 2;
+                        this.ballX = canvas.width / 2;
+                        this.ballY = canvas.height - 50;
+                        this.ballSpeed = 5;
+                        this.ballSpeedX = this.ballSpeed;
+                        this.ballSpeedY = -this.ballSpeed;
+                        this.ballRadius = 10;
+                        
+                        // 初始化方块
+                        this.bricks = [];
+                        this.initBricks();
+                        
+                        // 绑定游戏控制按钮事件
+                        document.getElementById('block-start-btn').addEventListener('click', () => {
+                            this.startGame();
+                        });
+                        
+                        document.getElementById('block-pause-btn').addEventListener('click', () => {
+                            this.togglePause();
+                        });
+                        
+                        document.getElementById('block-restart-btn').addEventListener('click', () => {
+                            this.restartGame();
+                        });
+                        
+                        document.getElementById('block-play-again-btn').addEventListener('click', () => {
+                            this.restartGame();
+                        });
+                        
+                        document.getElementById('block-next-level-btn').addEventListener('click', () => {
+                            this.nextLevel();
+                        });
+                        
+                        // 绑定鼠标移动事件
+                        canvas.addEventListener('mousemove', (e) => {
+                            if (!this.gameRunning || this.gamePaused) return;
                             
-                            // 从左?�碰??
-                            if (prevX <= brick.x || prevX >= brick.x + brick.width) {
-                                this.ballSpeedX = -this.ballSpeedX;
+                            const relativeX = e.clientX - canvas.getBoundingClientRect().left;
+                            if (relativeX > 0 && relativeX < canvas.width) {
+                                this.paddleX = relativeX - this.paddleWidth / 2;
+                                
+                                // 确保挡板不超出画布
+                                if (this.paddleX < 0) {
+                                    this.paddleX = 0;
+                                } else if (this.paddleX > canvas.width - this.paddleWidth) {
+                                    this.paddleX = canvas.width - this.paddleWidth;
+                                }
                             }
-                            // 从�?下碰??
-                            else {
-                                this.ballSpeedY = -this.ballSpeedY;
+                        });
+                        
+                        // 绘制初始游戏画面
+                        this.drawInitialScreen();
+                    },
+                    
+                    initBricks: function() {
+                        this.bricks = [];
+                        const brickRows = 5;
+                        const brickCols = 8;
+                        const brickPadding = 10;
+                        const brickOffsetTop = 60;
+                        const brickOffsetLeft = 30;
+                        
+                        const brickColors = ['#3a86ff', '#4361ee', '#4cc9f0', '#4895ef', '#7209b7'];
+                        
+                        const brickWidth = (this.canvas.width - 2 * brickOffsetLeft - (brickCols - 1) * brickPadding) / brickCols;
+                        const brickHeight = 22;
+                        
+                        for (let c = 0; c < brickCols; c++) {
+                            this.bricks[c] = [];
+                            for (let r = 0; r < brickRows; r++) {
+                                this.bricks[c][r] = {
+                                    x: c * (brickWidth + brickPadding) + brickOffsetLeft,
+                                    y: r * (brickHeight + brickPadding) + brickOffsetTop,
+                                    width: brickWidth,
+                                    height: brickHeight,
+                                    color: brickColors[r % brickColors.length],
+                                    status: 1 // 1表示存在，0表示被摧毁
+                                };
                             }
                         }
+                    },
+                    
+                    drawInitialScreen: function() {
+                        this.ctx.fillStyle = '#0f0c29';
+                        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
                         
-                        // ?��??��?
-                        brick.status = 0;
-                        
-                        // 增�??�数
-                        this.score += 10 * this.level;
-                        this.updateDisplay();
-                        
-                        // 如�??�特殊方?��??��??��??��?
-                        if (brick.isPowerupBrick) {
-                            this.createPowerup(brick.x + brick.width / 2, brick.y + brick.height / 2);
+                        this.ctx.fillStyle = '#3a86ff';
+                        this.ctx.font = '24px Arial';
+                        this.ctx.textAlign = 'center';
+                        this.ctx.fillText('方块爆破游戏', this.canvas.width/2, this.canvas.height/2 - 30);
+                        this.ctx.font = '16px Arial';
+                        this.ctx.fillText('点击"开始游戏"按钮开始游戏', this.canvas.width/2, this.canvas.height/2 + 20);
+                        this.ctx.fillText('使用鼠标移动挡板', this.canvas.width/2, this.canvas.height/2 + 50);
+                    },
+                    
+                    startGame: function() {
+                        if (!this.gameRunning) {
+                            this.gameRunning = true;
+                            this.gamePaused = false;
+                            this.score = 0;
+                            this.lives = 3;
+                            this.level = 1;
+                            
+                            // 更新显示
+                            this.updateDisplay();
+                            
+                            // 初始化游戏状态
+                            this.paddleX = (this.canvas.width - this.paddleWidth) / 2;
+                            this.ballX = this.canvas.width / 2;
+                            this.ballY = this.canvas.height - 50;
+                            this.ballSpeed = 5;
+                            this.ballSpeedX = this.ballSpeed;
+                            this.ballSpeedY = -this.ballSpeed;
+                            
+                            this.initBricks();
+                            
+                            // 开始游戏循环
+                            this.gameLoop();
+                            
+                            // 隐藏游戏结束和关卡完成界面
+                            document.getElementById('block-game-over').classList.add('hidden');
+                            document.getElementById('block-level-complete').classList.add('hidden');
                         }
-                        
-                        // 如�?没�?穿透能?��?跳出循环
-                        if (!this.activePowerup || this.activePowerup.name !== this.POWERUP_TYPES.PIERCE_BALL.name) {
+                    },
+                    
+                    gameLoop: function() {
+                        if (!this.gameRunning || this.gamePaused) {
                             return;
                         }
-                    }
-                }
-            }
-        }
-    },
-    
-    createPowerup: function(x, y) {
-        // ?�机?�择?��??��?类�?
-        const powerupTypes = Object.values(this.POWERUP_TYPES);
-        const randomType = powerupTypes[Math.floor(Math.random() * powerupTypes.length)];
-        
-        this.powerups.push({
-            x: x,
-            y: y,
-            type: randomType,
-            color: randomType.color,
-            speed: 2
-        });
-    },
-    
-    updatePowerups: function() {
-        for (let i = this.powerups.length - 1; i >= 0; i--) {
-            const powerup = this.powerups[i];
-            
-            // ?��?移动?��??��?
-            powerup.y += powerup.speed;
-            
-            // 检测能?��??��??�板碰�?
-            if (
-                powerup.y > this.canvas.height - this.paddleHeight &&
-                powerup.y < this.canvas.height &&
-                powerup.x > this.paddleX &&
-                powerup.x < this.paddleX + this.paddleWidth
-            ) {
-                // 激活能?��???
-                this.activatePowerup(powerup.type);
-                
-                // 从数组中移除
-                this.powerups.splice(i, 1);
-            }
-            // 如�??��??��??�出屏�?，移?��?
-            else if (powerup.y > this.canvas.height) {
-                this.powerups.splice(i, 1);
-            }
-        }
-    },
-    
-    activatePowerup: function(powerupType) {
-        this.activePowerup = powerupType;
-        
-        // ?�示激活�?�?
-        const powerupActiveElement = document.getElementById('powerup-active');
-        powerupActiveElement.textContent = `${powerupType.name} 已�?�?`;
-        powerupActiveElement.style.display = 'block';
-        powerupActiveElement.style.backgroundColor = powerupType.color;
-        
-        // 设置?��??��?计时??
-        if (powerupType.duration > 0) {
-            this.powerupTimer = Date.now() + powerupType.duration;
-        }
-        
-        // 应用?��??��??��?
-        switch(powerupType.name) {
-            case this.POWERUP_TYPES.EXTEND_PADDLE.name:
-                this.paddleWidth = Math.min(this.paddleWidth + 40, this.paddleMaxWidth);
-                break;
-            case this.POWERUP_TYPES.SPEED_BALL.name:
-                this.ballSpeedX *= 1.5;
-                this.ballSpeedY *= 1.5;
-                break;
-            case this.POWERUP_TYPES.EXTRA_LIFE.name:
-                this.lives++;
-                this.updateDisplay();
-                break;
-            case this.POWERUP_TYPES.PIERCE_BALL.name:
-                // 穿透�??�已?�碰?��?测中处�?
-                break;
-        }
-        
-        // 3秒�??��??�示
-        setTimeout(() => {
-            powerupActiveElement.style.display = 'none';
-        }, 3000);
-    },
-    
-    checkPowerupExpiry: function() {
-        if (this.activePowerup && this.activePowerup.duration > 0 && Date.now() > this.powerupTimer) {
-            // 移除?��??��??��?
-            switch(this.activePowerup.name) {
-                case this.POWERUP_TYPES.EXTEND_PADDLE.name:
-                    this.paddleWidth = Math.max(this.paddleWidth - 40, this.paddleMinWidth);
-                    break;
-                case this.POWERUP_TYPES.SPEED_BALL.name:
-                    this.ballSpeedX /= 1.5;
-                    this.ballSpeedY /= 1.5;
-                    break;
-                case this.POWERUP_TYPES.PIERCE_BALL.name:
-                    // ?��??��?，只?��?止穿?��???
-                    break;
-            }
-            
-            // 清除当�??��??��?
-            this.activePowerup = null;
-            document.getElementById('powerup-active').style.display = 'none';
-        }
-    },
-    
-    loseLife: function() {
-        this.lives--;
-        this.updateDisplay();
-        
-        if (this.lives <= 0) {
-            this.gameOver();
-        } else {
-            // ?�置?��??�板位置
-            this.ballX = this.canvas.width / 2;
-            this.ballY = this.canvas.height - 50;
-            this.ballSpeedX = this.ballSpeed;
-            this.ballSpeedY = -this.ballSpeed;
-            this.paddleX = (this.canvas.width - this.paddleWidth) / 2;
-            
-            // 绘制一�?
-            this.draw();
-        }
-    },
-    
-    checkLevelComplete: function() {
-        for (let c = 0; c < this.brickCols; c++) {
-            for (let r = 0; r < this.brickRows; r++) {
-                if (this.bricks[c][r].status === 1) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    },
-    
-    levelComplete: function() {
-        this.gameRunning = false;
-        cancelAnimationFrame(this.animationId);
-        
-        // ?�示?�卡完�??�面
-        document.getElementById('block-level-complete').classList.remove('hidden');
-        
-        // ?�新游�?中�??�据
-        GameCenter.updateBlockGameStats(this.score, this.level);
-    },
-    
-    gameOver: function() {
-        this.gameRunning = false;
-        cancelAnimationFrame(this.animationId);
-        
-        // ?�示?�终�???
-        document.getElementById('block-final-score').textContent = this.score;
-        
-        // ?�示游�?结�??�面
-        document.getElementById('block-game-over').classList.remove('hidden');
-        
-        // ?�新游�?中�??�据
-        GameCenter.updateBlockGameStats(this.score, this.level);
-    },
-    
-    draw: function() {
-        // 清空?��?
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        // 绘制?�景
-        this.drawBackground();
-        
-        // 绘制?��?
-        this.drawBricks();
-        
-        // 绘制?�板
-        this.drawPaddle();
-        
-        // 绘制??
-        this.drawBall();
-        
-        // 绘制?��??��?
-        this.drawPowerups();
-        
-        // 绘制?��??��?激活�?�?
-        if (this.activePowerup) {
-            const timeLeft = Math.ceil((this.powerupTimer - Date.now()) / 1000);
-            if (timeLeft > 0) {
-                const powerupActiveElement = document.getElementById('powerup-active');
-                powerupActiveElement.textContent = `${this.activePowerup.name} - ${timeLeft}秒`;
-            }
-        }
-    },
-    
-    drawBackground: function() {
-        // 渐�??�景
-        const gradient = this.ctx.createLinearGradient(0, 0, 0, this.canvas.height);
-        gradient.addColorStop(0, '#0a0e27');
-        gradient.addColorStop(1, '#1a1f4e');
-        this.ctx.fillStyle = gradient;
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        // 绘制网格
-        this.ctx.strokeStyle = 'rgba(58, 134, 255, 0.1)';
-        this.ctx.lineWidth = 1;
-        
-        // ?�直�?
-        for (let x = 0; x <= this.canvas.width; x += 40) {
-            this.ctx.beginPath();
-            this.ctx.moveTo(x, 0);
-            this.ctx.lineTo(x, this.canvas.height);
-            this.ctx.stroke();
-        }
-        
-        // 水平�?
-        for (let y = 0; y <= this.canvas.height; y += 40) {
-            this.ctx.beginPath();
-            this.ctx.moveTo(0, y);
-            this.ctx.lineTo(this.canvas.width, y);
-            this.ctx.stroke();
-        }
-    },
-    
-    drawBricks: function() {
-        for (let c = 0; c < this.brickCols; c++) {
-            for (let r = 0; r < this.brickRows; r++) {
-                const brick = this.bricks[c][r];
-                if (brick.status === 1) {
-                    // 绘制?��?
-                    this.ctx.fillStyle = brick.color;
-                    this.ctx.fillRect(brick.x, brick.y, brick.width, brick.height);
+                        
+                        this.update();
+                        this.draw();
+                        
+                        if (this.gameRunning && !this.gamePaused) {
+                            this.animationId = requestAnimationFrame(() => this.gameLoop());
+                        }
+                    },
                     
-                    // ?��?边�?
-                    this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
-                    this.ctx.lineWidth = 2;
-                    this.ctx.strokeRect(brick.x, brick.y, brick.width, brick.height);
+                    update: function() {
+                        // 移动球
+                        this.ballX += this.ballSpeedX;
+                        this.ballY += this.ballSpeedY;
+                        
+                        // 边界碰撞检测
+                        if (this.ballX + this.ballRadius > this.canvas.width || this.ballX - this.ballRadius < 0) {
+                            this.ballSpeedX = -this.ballSpeedX;
+                        }
+                        
+                        if (this.ballY - this.ballRadius < 0) {
+                            this.ballSpeedY = -this.ballSpeedY;
+                        }
+                        
+                        // 底部边界（丢失球）
+                        if (this.ballY + this.ballRadius > this.canvas.height) {
+                            this.lives--;
+                            this.updateDisplay();
+                            
+                            if (this.lives <= 0) {
+                                this.gameOver();
+                                return;
+                            }
+                            
+                            // 重置球的位置
+                            this.ballX = this.canvas.width / 2;
+                            this.ballY = this.canvas.height - 50;
+                            this.ballSpeedX = this.ballSpeed;
+                            this.ballSpeedY = -this.ballSpeed;
+                        }
+                        
+                        // 挡板碰撞检测
+                        if (this.ballY + this.ballRadius > this.canvas.height - 30 &&
+                            this.ballY - this.ballRadius < this.canvas.height - 20 &&
+                            this.ballX > this.paddleX &&
+                            this.ballX < this.paddleX + this.paddleWidth) {
+                            
+                            // 根据击中挡板的位置改变反弹角度
+                            const hitPoint = (this.ballX - this.paddleX) / this.paddleWidth;
+                            this.ballSpeedX = (hitPoint - 0.5) * 8;
+                            this.ballSpeedY = -Math.abs(this.ballSpeedY);
+                        }
+                        
+                        // 方块碰撞检测
+                        for (let c = 0; c < this.bricks.length; c++) {
+                            for (let r = 0; r < this.bricks[c].length; r++) {
+                                const brick = this.bricks[c][r];
+                                if (brick.status === 1) {
+                                    if (this.ballX + this.ballRadius > brick.x &&
+                                        this.ballX - this.ballRadius < brick.x + brick.width &&
+                                        this.ballY + this.ballRadius > brick.y &&
+                                        this.ballY - this.ballRadius < brick.y + brick.height) {
+                                        
+                                        // 摧毁方块
+                                        brick.status = 0;
+                                        this.score += 10;
+                                        this.updateDisplay();
+                                        
+                                        // 反弹球
+                                        this.ballSpeedY = -this.ballSpeedY;
+                                        
+                                        // 检查是否所有方块都被摧毁
+                                        if (this.checkLevelComplete()) {
+                                            this.levelComplete();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
                     
-                    // 如�??�特殊方?��?绘制?��??�记
-                    if (brick.isPowerupBrick) {
-                        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                    draw: function() {
+                        // 清空画布
+                        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                        
+                        // 绘制背景
+                        this.ctx.fillStyle = '#0f0c29';
+                        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                        
+                        // 绘制方块
+                        for (let c = 0; c < this.bricks.length; c++) {
+                            for (let r = 0; r < this.bricks[c].length; r++) {
+                                const brick = this.bricks[c][r];
+                                if (brick.status === 1) {
+                                    this.ctx.fillStyle = brick.color;
+                                    this.ctx.fillRect(brick.x, brick.y, brick.width, brick.height);
+                                    
+                                    // 添加边框
+                                    this.ctx.strokeStyle = '#ffffff';
+                                    this.ctx.lineWidth = 1;
+                                    this.ctx.strokeRect(brick.x, brick.y, brick.width, brick.height);
+                                }
+                            }
+                        }
+                        
+                        // 绘制挡板
+                        this.ctx.fillStyle = '#3a86ff';
+                        this.ctx.fillRect(this.paddleX, this.canvas.height - 20, this.paddleWidth, 10);
+                        
+                        // 绘制球
+                        this.ctx.fillStyle = '#ff9e00';
                         this.ctx.beginPath();
-                        this.ctx.arc(
-                            brick.x + brick.width / 2,
-                            brick.y + brick.height / 2,
-                            brick.height / 4,
-                            0,
-                            Math.PI * 2
-                        );
+                        this.ctx.arc(this.ballX, this.ballY, this.ballRadius, 0, Math.PI * 2);
                         this.ctx.fill();
+                    },
+                    
+                    updateDisplay: function() {
+                        document.getElementById('score').textContent = this.score;
+                        document.getElementById('lives').textContent = this.lives;
+                        document.getElementById('level').textContent = this.level;
+                    },
+                    
+                    checkLevelComplete: function() {
+                        for (let c = 0; c < this.bricks.length; c++) {
+                            for (let r = 0; r < this.bricks[c].length; r++) {
+                                if (this.bricks[c][r].status === 1) {
+                                    return false;
+                                }
+                            }
+                        }
+                        return true;
+                    },
+                    
+                    levelComplete: function() {
+                        this.gameRunning = false;
+                        cancelAnimationFrame(this.animationId);
+                        
+                        // 显示关卡完成界面
+                        document.getElementById('block-level-complete').classList.remove('hidden');
+                        document.getElementById('block-final-score').textContent = this.score;
+                        
+                        // 更新游戏中心数据
+                        GameCenter.updateBlockGameStats(this.score, this.level);
+                    },
+                    
+                    gameOver: function() {
+                        this.gameRunning = false;
+                        cancelAnimationFrame(this.animationId);
+                        
+                        // 显示游戏结束界面
+                        document.getElementById('block-game-over').classList.remove('hidden');
+                        document.getElementById('block-final-score').textContent = this.score;
+                        
+                        // 更新游戏中心数据
+                        GameCenter.updateBlockGameStats(this.score, this.level);
+                    },
+                    
+                    togglePause: function() {
+                        if (!this.gameRunning) return;
+                        
+                        this.gamePaused = !this.gamePaused;
+                        const pauseBtn = document.getElementById('block-pause-btn');
+                        pauseBtn.textContent = this.gamePaused ? '继续游戏' : '暂停游戏';
+                        
+                        if (!this.gamePaused) {
+                            this.gameLoop();
+                        }
+                    },
+                    
+                    restartGame: function() {
+                        this.gameRunning = false;
+                        this.gamePaused = false;
+                        cancelAnimationFrame(this.animationId);
+                        
+                        this.score = 0;
+                        this.lives = 3;
+                        this.level = 1;
+                        
+                        this.updateDisplay();
+                        this.startGame();
+                    },
+                    
+                    nextLevel: function() {
+                        this.level++;
+                        this.gameRunning = true;
+                        this.gamePaused = false;
+                        
+                        // 增加难度
+                        this.ballSpeed += 0.5;
+                        
+                        // 重置球的位置
+                        this.ballX = this.canvas.width / 2;
+                        this.ballY = this.canvas.height - 50;
+                        this.ballSpeedX = this.ballSpeed;
+                        this.ballSpeedY = -this.ballSpeed;
+                        
+                        // 重新初始化方块
+                        this.initBricks();
+                        
+                        // 隐藏关卡完成界面
+                        document.getElementById('block-level-complete').classList.add('hidden');
+                        
+                        // 更新显示
+                        this.updateDisplay();
+                        
+                        // 继续游戏循环
+                        this.gameLoop();
+                    },
+                    
+                    stop: function() {
+                        console.log('方块爆破游戏停止');
+                        this.gameRunning = false;
+                        this.gamePaused = false;
+                        
+                        if (this.animationId) {
+                            cancelAnimationFrame(this.animationId);
+                            this.animationId = null;
+                        }
+                        
+                        // 清除画布
+                        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                        
+                        // 显示停止消息
+                        this.ctx.fillStyle = '#0f0c29';
+                        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                        this.ctx.fillStyle = '#ff9e00';
+                        this.ctx.font = '20px Arial';
+                        this.ctx.textAlign = 'center';
+                        this.ctx.fillText('游戏已停止', this.canvas.width/2, this.canvas.height/2);
                     }
-                }
-            }
-        }
-    },
-    
-    drawPaddle: function() {
-        // ?�板渐�?
-        const gradient = this.ctx.createLinearGradient(this.paddleX, this.canvas.height - this.paddleHeight, this.paddleX, this.canvas.height);
-        gradient.addColorStop(0, '#3a86ff');
-        gradient.addColorStop(1, '#4361ee');
-        this.ctx.fillStyle = gradient;
-        
-        // 绘制?�板
-        this.ctx.beginPath();
-        this.ctx.roundRect(this.paddleX, this.canvas.height - this.paddleHeight, this.paddleWidth, this.paddleHeight, 10);
-        this.ctx.fill();
-        
-        // ?�板边�?
-        this.ctx.strokeStyle = '#4cc9f0';
-        this.ctx.lineWidth = 2;
-        this.ctx.stroke();
-        
-        // ?�板?�部装饰
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-        this.ctx.fillRect(this.paddleX + 10, this.canvas.height - this.paddleHeight + 5, this.paddleWidth - 20, 3);
-    },
-    
-    drawBall: function() {
-        // ?�据?��??��??�态改?��??��???
-        let ballColor = '#ffffff';
-        if (this.activePowerup && this.activePowerup.name === this.POWERUP_TYPES.PIERCE_BALL.name) {
-            ballColor = '#f72585';
-        } else if (this.activePowerup && this.activePowerup.name === this.POWERUP_TYPES.SPEED_BALL.name) {
-            ballColor = '#ff9e00';
-        }
-        
-        // ?��?渐�?
-        const gradient = this.ctx.createRadialGradient(
-            this.ballX, this.ballY, 0,
-            this.ballX, this.ballY, this.ballSize
-        );
-        gradient.addColorStop(0, ballColor);
-        gradient.addColorStop(1, this.darkenColor(ballColor, 40));
-        
-        this.ctx.fillStyle = gradient;
-        
-        // 绘制??
-        this.ctx.beginPath();
-        this.ctx.arc(this.ballX, this.ballY, this.ballSize, 0, Math.PI * 2);
-        this.ctx.fill();
-        
-        // ?��?高�?
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-        this.ctx.beginPath();
-        this.ctx.arc(this.ballX - this.ballSize/3, this.ballY - this.ballSize/3, this.ballSize/3, 0, Math.PI * 2);
-        this.ctx.fill();
-    },
-    
-    drawPowerups: function() {
-        for (let i = 0; i < this.powerups.length; i++) {
-            const powerup = this.powerups[i];
-            
-            // 绘制?��??��?
-            this.ctx.fillStyle = powerup.color;
-            this.ctx.beginPath();
-            this.ctx.arc(powerup.x, powerup.y, 8, 0, Math.PI * 2);
-            this.ctx.fill();
-            
-            // ?��??��?边�?
-            this.ctx.strokeStyle = 'white';
-            this.ctx.lineWidth = 1;
-            this.ctx.stroke();
-            
-            // ?��??��??��??��?
-            this.ctx.shadowColor = powerup.color;
-            this.ctx.shadowBlur = 10;
-            this.ctx.beginPath();
-            this.ctx.arc(powerup.x, powerup.y, 6, 0, Math.PI * 2);
-            this.ctx.fill();
-            this.ctx.shadowBlur = 0;
-        }
-    },
-    
-    updateDisplay: function() {
-        document.getElementById('score').textContent = this.score;
-        document.getElementById('lives').textContent = this.lives;
-        document.getElementById('level').textContent = this.level;
-    },
-    
-    togglePause: function() {
-        if (!this.gameRunning) return;
-        
-        if (this.gamePaused) {
-            // 继续游�?
-            this.gamePaused = false;
-            document.getElementById('block-pause-btn').textContent = "?��?游�?";
-            this.gameLoop();
-        } else {
-            // ?��?游�?
-            this.gamePaused = true;
-            document.getElementById('block-pause-btn').textContent = "继续游�?";
-            cancelAnimationFrame(this.animationId);
-            
-            // 绘制?��??�本
-            this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-            
-            this.ctx.fillStyle = '#ff9e00';
-            this.ctx.font = 'bold 60px Arial';
-            this.ctx.textAlign = 'center';
-            this.ctx.fillText('游�??��?', this.canvas.width / 2, this.canvas.height / 2);
-            
-            this.ctx.fillStyle = 'white';
-            this.ctx.font = '30px Arial';
-            this.ctx.fillText('?�空?�键?�点?��??�继�?, this.canvas.width / 2, this.canvas.height / 2 + 60);
-        }
-    },
-    
-    restartGame: function() {
-        // ?�置游�??��?
-        this.score = 0;
-        this.lives = 3;
-        this.level = 1;
-        
-        // ?�新?�示
-        this.updateDisplay();
-        
-        // ?��??�游??
-        this.init();
-        
-        // ?��?游�?结�??�面
-        document.getElementById('block-game-over').classList.add('hidden');
-        document.getElementById('block-level-complete').classList.add('hidden');
-        
-        // ?�止当�?游�?循环
-        if (this.gameRunning) {
-            cancelAnimationFrame(this.animationId);
-        }
-        
-        // 开始新游�?
-        this.startGame();
-    },
-    
-    nextLevel: function() {
-        this.level++;
-        // ?�新?�示
-        this.updateDisplay();
-        
-        // ?��??�卡完�??�面
-        document.getElementById('block-level-complete').classList.add('hidden');
-        
-        // ?��??�新?�卡
-        this.init();
-        
-        // 开始游??
-        this.startGame();
-    },
-    
-    stop: function() {
-        console.log('?��??�破游�??�止');
-        this.gameRunning = false;
-        this.gamePaused = false;
-        
-        if (this.animationId) {
-            cancelAnimationFrame(this.animationId);
-            this.animationId = null;
-        }
-        
-        // 清除?��?
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        // ?�示?�止消息
-        this.ctx.fillStyle = '#0f0c29';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.fillStyle = '#ff9e00';
-        this.ctx.font = '20px Arial';
-        this.ctx.textAlign = 'center';
-        this.ctx.fillText('游�?已�?�?, this.canvas.width/2, this.canvas.height/2);
-    },
-    
-    darkenColor: function(color, percent) {
-        const num = parseInt(color.replace("#", ""), 16);
-        const amt = Math.round(2.55 * percent);
-        const R = (num >> 16) - amt;
-        const G = (num >> 8 & 0x00FF) - amt;
-        const B = (num & 0x0000FF) - amt;
-        
-        return "#" + (
-            0x1000000 +
-            (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
-            (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
-            (B < 255 ? B < 1 ? 0 : B : 255)
-        ).toString(16).slice(1);
-    }
-};
+                };
                 
                 SnakeGame = {
                     gameRunning: false,
@@ -1886,20 +1471,20 @@
                     gameInterval: null,
                     score: 0,
                     highScore: 0,
-                    speed: 150, // 默认?�度（毫秒�?
+                    speed: 150, // 默认速度（毫秒）
                     
                     init: function() {
-                        console.log('贪�??�游?��?始�?');
-                        // ?��??��??��?下�?
+                        console.log('贪食蛇游戏初始化');
+                        // 获取画布和上下文
                         const canvas = document.getElementById('snake-canvas');
                         const ctx = canvas.getContext('2d');
                         
-                        // 设置?��?游�??��?
+                        // 设置初始游戏状态
                         canvas.style.display = 'block';
                         this.canvas = canvas;
                         this.ctx = ctx;
                         
-                        // 游�??��?
+                        // 游戏变量
                         this.gridSize = 20;
                         this.snake = [
                             {x: 10, y: 10},
@@ -1911,7 +1496,7 @@
                         this.food = this.generateFood();
                         this.foodEaten = false;
                         
-                        // 绑�?游�??�制?�钮事件
+                        // 绑定游戏控制按钮事件
                         document.getElementById('snake-start-btn').addEventListener('click', () => {
                             this.startGame();
                         });
@@ -1928,15 +1513,15 @@
                             this.restartGame();
                         });
                         
-                        // 绑�??�度?�择?�钮
+                        // 绑定难度选择按钮
                         document.querySelectorAll('.difficulty-btn').forEach(btn => {
                             btn.addEventListener('click', (e) => {
                                 document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
                                 e.target.classList.add('active');
                                 this.speed = parseInt(e.target.dataset.speed);
-                                console.log('?�择?�度:', e.target.textContent, '?�度:', this.speed);
+                                console.log('选择难度:', e.target.textContent, '速度:', this.speed);
                                 
-                                // 如�?游�?�?��运�?，更?�游?�速度
+                                // 如果游戏正在运行，更新游戏速度
                                 if (this.gameRunning && !this.gamePaused) {
                                     clearInterval(this.gameInterval);
                                     this.gameInterval = setInterval(() => this.gameLoop(), this.speed);
@@ -1944,12 +1529,12 @@
                             });
                         });
                         
-                        // 绑�??��??�制
+                        // 绑定键盘控制
                         document.addEventListener('keydown', (e) => {
                             this.handleKeyPress(e);
                         });
                         
-                        // 绘制?��?游�??�面
+                        // 绘制初始游戏画面
                         this.drawInitialScreen();
                     },
                     
@@ -1960,10 +1545,10 @@
                         this.ctx.fillStyle = '#4CAF50';
                         this.ctx.font = '24px Arial';
                         this.ctx.textAlign = 'center';
-                        this.ctx.fillText('贪�??�游??, this.canvas.width/2, this.canvas.height/2 - 30);
+                        this.ctx.fillText('贪食蛇游戏', this.canvas.width/2, this.canvas.height/2 - 30);
                         this.ctx.font = '16px Arial';
-                        this.ctx.fillText('?�击"开始游???�钮开始游??, this.canvas.width/2, this.canvas.height/2 + 20);
-                        this.ctx.fillText('使用?��??�控?��??�移??, this.canvas.width/2, this.canvas.height/2 + 50);
+                        this.ctx.fillText('点击"开始游戏"按钮开始游戏', this.canvas.width/2, this.canvas.height/2 + 20);
+                        this.ctx.fillText('使用方向键控制蛇的移动', this.canvas.width/2, this.canvas.height/2 + 50);
                     },
                     
                     generateFood: function() {
@@ -1980,7 +1565,7 @@
                                 y: Math.floor(Math.random() * gridHeight)
                             };
                             
-                            // 检?��??�是?�在?�身�?
+                            // 检查食物是否在蛇身上
                             for (let segment of this.snake) {
                                 if (segment.x === food.x && segment.y === food.y) {
                                     onSnake = true;
@@ -1998,7 +1583,7 @@
                             this.gamePaused = false;
                             this.score = 0;
                             
-                            // ?�置??
+                            // 重置蛇
                             this.snake = [
                                 {x: 10, y: 10},
                                 {x: 9, y: 10},
@@ -2009,13 +1594,13 @@
                             this.food = this.generateFood();
                             this.foodEaten = false;
                             
-                            // ?�新?�示
+                            // 更新显示
                             this.updateDisplay();
                             
-                            // 开始游?�循??
+                            // 开始游戏循环
                             this.gameInterval = setInterval(() => this.gameLoop(), this.speed);
                             
-                            // ?��?游�?结�??�面
+                            // 隐藏游戏结束界面
                             document.getElementById('snake-game-over').classList.add('hidden');
                         }
                     },
@@ -2025,27 +1610,27 @@
                             return;
                         }
                         
-                        // ?�新?��?
+                        // 更新方向
                         this.direction = this.nextDirection;
                         
-                        // 移动??
+                        // 移动蛇
                         this.moveSnake();
                         
-                        // 检?�碰??
+                        // 检查碰撞
                         if (this.checkCollision()) {
                             this.gameOver();
                             return;
                         }
                         
-                        // 检?�是?��??��???
+                        // 检查是否吃到食物
                         this.checkFood();
                         
-                        // 绘制游�?
+                        // 绘制游戏
                         this.draw();
                     },
                     
                     moveSnake: function() {
-                        // ?�建?��??�头
+                        // 创建新的蛇头
                         const head = {...this.snake[0]};
                         
                         switch (this.direction) {
@@ -2063,10 +1648,10 @@
                                 break;
                         }
                         
-                        // 添�??��??�头
+                        // 添加新的蛇头
                         this.snake.unshift(head);
                         
-                        // 移除?�尾（�??�没?��??��??��?
+                        // 移除蛇尾（如果没有吃到食物）
                         if (!this.foodEaten) {
                             this.snake.pop();
                         } else {
@@ -2079,12 +1664,12 @@
                         const gridWidth = this.canvas.width / this.gridSize;
                         const gridHeight = this.canvas.height / this.gridSize;
                         
-                        // 检?��?壁碰??
+                        // 检查墙壁碰撞
                         if (head.x < 0 || head.x >= gridWidth || head.y < 0 || head.y >= gridHeight) {
                             return true;
                         }
                         
-                        // 检?�自?�碰??
+                        // 检查自我碰撞
                         for (let i = 1; i < this.snake.length; i++) {
                             if (head.x === this.snake[i].x && head.y === this.snake[i].y) {
                                 return true;
@@ -2098,7 +1683,7 @@
                         const head = this.snake[0];
                         
                         if (head.x === this.food.x && head.y === this.food.y) {
-                            // ?�到食物
+                            // 吃到食物
                             this.score += 10;
                             this.foodEaten = true;
                             this.food = this.generateFood();
@@ -2107,10 +1692,10 @@
                     },
                     
                     draw: function() {
-                        // 清空?��?
+                        // 清空画布
                         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
                         
-                        // 绘制?�景
+                        // 绘制背景
                         this.ctx.fillStyle = '#1a1a2e';
                         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
                         
@@ -2132,15 +1717,15 @@
                             this.ctx.stroke();
                         }
                         
-                        // 绘制??
+                        // 绘制蛇
                         for (let i = 0; i < this.snake.length; i++) {
                             const segment = this.snake[i];
                             
-                            // ?�头
+                            // 蛇头
                             if (i === 0) {
                                 this.ctx.fillStyle = '#4CAF50';
                             } else {
-                                // ?�身渐�?
+                                // 蛇身渐变
                                 const intensity = 200 - Math.min(i * 10, 150);
                                 this.ctx.fillStyle = `rgb(76, ${intensity}, 80)`;
                             }
@@ -2152,12 +1737,12 @@
                                 this.gridSize - 1
                             );
                             
-                            // ?�头?��?
+                            // 蛇头眼睛
                             if (i === 0) {
                                 this.ctx.fillStyle = '#000000';
                                 const eyeSize = this.gridSize / 5;
                                 
-                                // ?�据?��?绘制?��?
+                                // 根据方向绘制眼睛
                                 let leftEyeX, leftEyeY, rightEyeX, rightEyeY;
                                 
                                 switch (this.direction) {
@@ -2209,7 +1794,7 @@
                         document.getElementById('snake-score').textContent = this.score;
                         document.getElementById('snake-high-score-game').textContent = this.highScore;
                         
-                        // ?�新?�高�?
+                        // 更新最高分
                         if (this.score > this.highScore) {
                             this.highScore = this.score;
                             document.getElementById('snake-high-score-game').textContent = this.highScore;
@@ -2242,11 +1827,11 @@
                         this.gameRunning = false;
                         clearInterval(this.gameInterval);
                         
-                        // ?�示游�?结�??�面
+                        // 显示游戏结束界面
                         document.getElementById('snake-game-over').classList.remove('hidden');
                         document.getElementById('snake-final-score').textContent = this.score;
                         
-                        // ?�新游�?中�??�据
+                        // 更新游戏中心数据
                         GameCenter.updateSnakeGameStats(this.score, this.snake.length);
                     },
                     
@@ -2255,7 +1840,7 @@
                         
                         this.gamePaused = !this.gamePaused;
                         const pauseBtn = document.getElementById('snake-pause-btn');
-                        pauseBtn.textContent = this.gamePaused ? '继续游�?' : '?��?游�?';
+                        pauseBtn.textContent = this.gamePaused ? '继续游戏' : '暂停游戏';
                     },
                     
                     restartGame: function() {
@@ -2265,7 +1850,7 @@
                         
                         this.score = 0;
                         
-                        // ?�置??
+                        // 重置蛇
                         this.snake = [
                             {x: 10, y: 10},
                             {x: 9, y: 10},
@@ -2281,7 +1866,7 @@
                     },
                     
                     stop: function() {
-                        console.log('贪�??�游?��?�?);
+                        console.log('贪食蛇游戏停止');
                         this.gameRunning = false;
                         this.gamePaused = false;
                         
@@ -2290,22 +1875,22 @@
                             this.gameInterval = null;
                         }
                         
-                        // 清除?��?
+                        // 清除画布
                         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
                         
-                        // ?�示?�止消息
+                        // 显示停止消息
                         this.ctx.fillStyle = '#1a1a2e';
                         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
                         this.ctx.fillStyle = '#ff9e00';
                         this.ctx.font = '20px Arial';
                         this.ctx.textAlign = 'center';
-                        this.ctx.fillText('游�?已�?�?, this.canvas.width/2, this.canvas.height/2);
+                        this.ctx.fillText('游戏已停止', this.canvas.width/2, this.canvas.height/2);
                     }
                 };
             }
         };
         
-        // ?��??�游?�中�?
+        // 初始化游戏中心
         GameCenter.init();
     </script>
 </body>
