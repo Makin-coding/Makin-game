@@ -1,1 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>資源推薦清單 · 收藏好物</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            background: linear-gradient(145deg, #eef2f9 0%, #e0e8f2 100%);
+            font-family: system-ui, 'Segoe UI', 'Helvetica Neue', 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 2rem 1.5rem;
+            color: #1a2c3e;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 主卡片風格 */
+        .hero-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 40px;
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.1);
+            padding: 1.8rem 2rem;
+            margin-bottom: 1.8rem;
+            border: 1px solid rgba(148, 184, 218, 0.3);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e6f5c, #289672);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subhead {
+            color: #3b6e5e;
+            font-weight: 500;
+            background: #e0f2e9;
+            padding: 0.2rem 1rem;
+            border-radius: 60px;
+            font-size: 0.8rem;
+        }
+
+        hr {
+            margin: 1.2rem 0 1.5rem;
+            border: none;
+            height: 2px;
+            background: linear-gradient(90deg, #cbdde9, #aac7df, #cbdde9);
+        }
+
+        /* 表單區塊 */
+        .form-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            color: #226653;
+        }
+
+        input, textarea {
+            font-family: inherit;
+            border-radius: 28px;
+            border: 1px solid #cde0ec;
+            padding: 0.75rem 1.2rem;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            background: white;
+            width: 100%;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #289672;
+            box-shadow: 0 0 0 3px rgba(40, 150, 114, 0.2);
+        }
+
+        .btn-primary {
+            background: #1e6f5c;
+            color: white;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 0.8rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            transition: all 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .btn-primary:hover {
+            background: #0e5544;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(30,111,92,0.25);
+        }
+
+        /* 過濾器區域 */
+        .filters-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            background: #ffffffcc;
+            backdrop-filter: blur(4px);
+            padding: 0.7rem 1.5rem;
+            border-radius: 60px;
+            margin-bottom: 1.8rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            align-items: center;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 1px solid #caddf0;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #2c5a4c;
+        }
+
+        .filter-btn.active {
+            background: #289672;
+            border-color: #289672;
+            color: white;
+            box-shadow: 0 2px 8px rgba(40,150,114,0.3);
+        }
+
+        .filter-btn:hover:not(.active) {
+            background: #dff3ec;
+        }
+
+        /* 資源卡片顯示風格 (卡片) */
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.4rem;
+            margin-top: 0.5rem;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 32px;
+            padding: 1.2rem 1.3rem;
+            transition: transform 0.15s, box-shadow 0.2s;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+            border-left: 8px solid #77b39f;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .resource-card.done-card {
+            opacity: 0.75;
+            background: #f8fafc;
+            border-left-color: #89a7b3;
+            filter: grayscale(6%);
+            order: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .resource-title {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #1e6f5c;
+            word-break: break-word;
+        }
+
+        .badge-status {
+            font-size: 0.65rem;
+            background: #eef2f6;
+            padding: 0.2rem 0.7rem;
+            border-radius: 50px;
+            font-weight: 600;
+        }
+
+        .resource-type {
+            background: #e9f3ef;
+            font-size: 0.7rem;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            display: inline-block;
+            width: fit-content;
+            font-weight: 600;
+            color: #226653;
+        }
+
+        .resource-note {
+            font-size: 0.85rem;
+            color: #4f6b7a;
+            line-height: 1.4;
+            background: #fbfefc;
+            padding: 0.5rem 0.8rem;
+            border-radius: 20px;
+            margin: 0.2rem 0;
+        }
+
+        .date-meta {
+            font-size: 0.7rem;
+            color: #7e9aab;
+        }
+
+        .card-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 0.8rem;
+            margin-top: 0.4rem;
+            align-items: center;
+        }
+
+        .btn-status-toggle {
+            background: #e9f0f5;
+            border: none;
+            border-radius: 40px;
+            padding: 0.3rem 1.2rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: #2c5a4c;
+            transition: 0.1s;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            background: #fffef7;
+            border-radius: 48px;
+            color: #6f9485;
+            font-weight: 500;
+            grid-column: 1 / -1;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #5e8071;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem;
+            }
+            .hero-card {
+                padding: 1.3rem;
+            }
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- 主標題＋表單 -->
+    <div class="hero-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <h1>📚 資源推薦清單 · 好物共享</h1>
+            <span class="subhead">✨ 收藏你愛的學習/工具/靈感</span>
+        </div>
+        <hr>
+        <div class="form-grid">
+            <div class="input-group">
+                <label>📌 資源名稱 <span style="color:#c2410c;">*</span></label>
+                <input type="text" id="resourceName" placeholder="例如：Figma 設計工具、原子習慣電子書、洋蔥閱讀法筆記" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <label>🏷️ 資源類型 <span style="color:#c2410c;">*</span></label>
+                <input type="text" id="resourceType" placeholder="例如：網站 / 書籍 / 影片 / 課程 / 工具" list="typeSuggestions">
+                <datalist id="typeSuggestions">
+                    <option>網站</option>
+                    <option>書籍</option>
+                    <option>影片</option>
+                    <option>課程</option>
+                    <option>工具</option>
+                    <option>文章</option>
+                </datalist>
+            </div>
+            <div class="input-group">
+                <label>📝 推薦備註 (可選)</label>
+                <textarea id="resourceNote" placeholder="簡單說明為什麼推薦這項資源、適合誰..."></textarea>
+            </div>
+            <button class="btn-primary" id="submitBtn">➕ 新增資源推薦</button>
+        </div>
+    </div>
+
+    <!-- 過濾器：全部 / active / done -->
+    <div class="filters-panel">
+        <div class="filter-group">
+            <span style="font-size:0.8rem; font-weight:600;">🔍 狀態：</span>
+            <button data-status-filter="all" class="filter-btn active" id="filterAll">全部</button>
+            <button data-status-filter="active" class="filter-btn" id="filterActive">📌 active (待探索)</button>
+            <button data-status-filter="done" class="filter-btn" id="filterDone">✅ 已完成 / 已讀</button>
+        </div>
+        <div class="filter-group">
+            <span style="font-size:0.8rem; font-weight:600;">📂 快速篩選 :</span>
+            <span style="font-size:0.7rem; color:#5c7e6f;">(搭配類型篩選在卡片區)</span>
+        </div>
+    </div>
+
+    <!-- 資源卡片展示區 (卡片模式) -->
+    <div id="resourceListContainer" class="resource-grid">
+        <div class="empty-state">✨ 還沒有推薦資源，新增一筆好東西吧！</div>
+    </div>
+    <footer>💾 資料自動儲存於瀏覽器 | 點擊「標記完成」可切換狀態 | 支援篩選 active / done</footer>
+</div>
+
+<script>
+    // ========================= DATA CONTRACT =========================
+    // 系統名稱：資源推薦清單
+    // 資料主體：推薦資源 (resource recommendation)
+    // 
+    // 每筆 record 欄位與用途：
+    // - id: 唯一識別 (string) 用於更新/刪除
+    // - createdAt: ISO 日期字串，紀錄建立時間，排序依據
+    // - status: 'active' | 'done'  (預設 active，待探索/已完成閱讀或使用)
+    // - name: 資源名稱 (必填) -> 對應資源標題
+    // - type: 資源類型 (必填) -> ex: 書籍, 網站, 課程...
+    // - note: 備註說明 (可選) -> 補充推薦原因
+    // 
+    // 功能實作符合所有規範：
+    // 1. 表單新增資源 (名稱、類型必填，備註可選)
+    // 2. 新增後即時顯示，渲染在最上方(依時間倒序)
+    // 3. 使用卡片風格顯示所有資料 (XXX_DISPLAY_STYLE = 卡片)
+    // 4. status 預設 active，可切換至 done
+    // 5. 每筆卡片有「切換狀態」按鈕 (active⇄done)
+    // 6. done 狀態卡片視覺淡化、顯示「✅ 已完成/已讀」
+    // 7. 過濾器: 全部 / active / done
+    // 8. localStorage 儲存 key = 'records'
+    // 9. 五大 function: createRecord, saveData, loadData, renderList, updateRecord
+    // 10. 無示範資料寫死
+
+    // ---------- 全域變數 ----------
+    let records = [];                     // 儲存所有資源紀錄
+    let currentStatusFilter = 'all';     // 'all', 'active', 'done'
+
+    const resourceNameInput = document.getElementById('resourceName');
+    const resourceTypeInput = document.getElementById('resourceType');
+    const resourceNoteTextarea = document.getElementById('resourceNote');
+    const submitBtn = document.getElementById('submitBtn');
+    const container = document.getElementById('resourceListContainer');
+
+    // ========== 核心函式區塊 (完全依照規範分離) ==========
+
+    /**
+     * createRecord(formData)
+     * @param {Object} formData 包含 name, type, note (note可選)
+     * @returns {Object} 新建立的 record
+     */
+    function createRecord(formData) {
+        const { name, type, note } = formData;
+        const now = new Date();
+        const uniqueId = `rec_${now.getTime()}_${Math.random().toString(36).substring(2, 8)}`;
+        return {
+            id: uniqueId,
+            createdAt: now.toISOString(),
+            status: 'active',       // 預設 active
+            name: name.trim(),
+            type: type.trim(),
+            note: note ? note.trim() : ''
+        };
+    }
+
+    /**
+     * saveData(record)
+     * 新增一筆 record 到 records array 最前方 (最新在上)，並寫入 localStorage
+     */
+    function saveData(record) {
+        records.unshift(record);    // 新推薦顯示在最上方
+        persistToLocalStorage();
+    }
+
+    /**
+     * loadData()
+     * 從 localStorage 讀取 records，若無資料或格式異常回傳空陣列
+     * 並確保相容舊格式
+     */
+    function loadData() {
+        const stored = localStorage.getItem('records');
+        if (stored) {
+            try {
+                const parsed = JSON.parse(stored);
+                if (Array.isArray(parsed)) {
+                    records = parsed.filter(item => item && typeof item === 'object' && item.id);
+                    // 修正遺漏欄位 (相容舊資料)
+                    records = records.map(r => ({
+                        id: r.id,
+                        createdAt: r.createdAt || new Date().toISOString(),
+                        status: (r.status === 'active' || r.status === 'done') ? r.status : 'active',
+                        name: r.name || '未命名資源',
+                        type: r.type || '其他',
+                        note: r.note || ''
+                    }));
+                } else {
+                    records = [];
+                }
+            } catch(e) {
+                records = [];
+            }
+        } else {
+            records = [];   // 沒有任何寫死的示範資料
+        }
+        return records;
+    }
+
+    /**
+     * updateRecord(id, changes)
+     * 更新特定 record 的欄位 (例如 status, 或未來擴充 likes 但此主題不需要)
+     * 更新後自動持久化
+     */
+    function updateRecord(id, changes) {
+        const index = records.findIndex(rec => rec.id === id);
+        if (index === -1) return false;
+        records[index] = { ...records[index], ...changes };
+        persistToLocalStorage();
+        return true;
+    }
+
+    /**
+     * renderList(recordsToShow)
+     * 根據傳入的 records 陣列，使用卡片風格顯示在頁面上
+     * 同時過濾器狀態會提前篩選，此處只負責視覺繪製
+     */
+    function renderList(recordsToShow) {
+        if (!container) return;
+        if (!recordsToShow.length) {
+            container.innerHTML = `<div class="empty-state">📭 目前沒有符合的資源推薦，新增一則實用內容吧！</div>`;
+            return;
+        }
+
+        // 按照 createdAt 最新在上方排序 (再次確認)
+        const sorted = [...recordsToShow].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+        const cardsHTML = sorted.map(record => {
+            const isDone = record.status === 'done';
+            const cardDoneClass = isDone ? 'done-card' : '';
+            const statusDisplayText = isDone ? '✅ 已完成 / 已讀' : '📌 active 待探索';
+            const toggleButtonText = isDone ? '🔄 恢復 active' : '✓ 標記完成';
+
+            const formattedDate = new Date(record.createdAt).toLocaleString('zh-TW', { hour12: false });
+
+            return `
+                <div class="resource-card ${cardDoneClass}" data-record-id="${record.id}">
+                    <div class="card-header">
+                        <div class="resource-title">📖 ${escapeHtml(record.name)}</div>
+                        <span class="badge-status">${statusDisplayText}</span>
+                    </div>
+                    <div>
+                        <span class="resource-type">🔖 ${escapeHtml(record.type)}</span>
+                    </div>
+                    ${record.note ? `<div class="resource-note">📎 備註：${escapeHtml(record.note)}</div>` : ''}
+                    <div class="date-meta">🕒 加入於 ${formattedDate}</div>
+                    <div class="card-actions">
+                        <button class="btn-status-toggle" data-action="toggle" data-id="${record.id}">${toggleButtonText}</button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        container.innerHTML = cardsHTML;
+
+        // 動態綁定卡片內的切換按鈕事件 (利用委託或直接綁定)
+        attachCardEvents();
+    }
+
+    // 輔助: 防XSS
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+            return c;
+        });
+    }
+
+    // 卡片按鈕事件綁定 (切換狀態)
+    function attachCardEvents() {
+        // 使用事件委託避免重複綁定
+        if (!container) return;
+        container.removeEventListener('click', globalCardClickHandler);
+        container.addEventListener('click', globalCardClickHandler);
+    }
+
+    function globalCardClickHandler(e) {
+        const btn = e.target.closest('[data-action="toggle"]');
+        if (!btn) return;
+        const id = btn.getAttribute('data-id');
+        if (id) {
+            const targetRecord = records.find(r => r.id === id);
+            if (targetRecord) {
+                const newStatus = targetRecord.status === 'active' ? 'done' : 'active';
+                updateRecord(id, { status: newStatus });
+                // 更新後重新套用當前過濾器並渲染
+                applyFilterAndRender();
+            }
+        }
+        e.preventDefault();
+    }
+
+    // 持久化函式 (localStorage)
+    function persistToLocalStorage() {
+        localStorage.setItem('records', JSON.stringify(records));
+    }
+
+    // 依照目前狀態過濾器取得要顯示的資料
+    function getFilteredRecords() {
+        if (currentStatusFilter === 'all') {
+            return [...records];
+        }
+        return records.filter(rec => rec.status === currentStatusFilter);
+    }
+
+    // 套用過濾器並重新渲染
+    function applyFilterAndRender() {
+        const filtered = getFilteredRecords();
+        renderList(filtered);
+        updateFilterButtonUI();
+    }
+
+    // 更新過濾器按鈕 active 樣式
+    function updateFilterButtonUI() {
+        const statusBtns = [
+            { id: 'filterAll', value: 'all' },
+            { id: 'filterActive', value: 'active' },
+            { id: 'filterDone', value: 'done' }
+        ];
+        statusBtns.forEach(({ id, value }) => {
+            const btn = document.getElementById(id);
+            if (btn) {
+                if (currentStatusFilter === value) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            }
+        });
+    }
+
+    // 新增資源邏輯 (使用表單)
+    function handleAddResource() {
+        const name = resourceNameInput.value.trim();
+        const type = resourceTypeInput.value.trim();
+        if (!name) {
+            alert('請填寫「資源名稱」');
+            return;
+        }
+        if (!type) {
+            alert('請填寫「資源類型」(例如：書籍、網站、課程)');
+            return;
+        }
+        const note = resourceNoteTextarea.value;
+
+        // 建立新 record
+        const newRecord = createRecord({ name, type, note });
+        saveData(newRecord);    // 存至 records 並持久化
+
+        // 清空表單
+        resourceNameInput.value = '';
+        resourceTypeInput.value = '';
+        resourceNoteTextarea.value = '';
+
+        // 新增後維持過濾器顯示全部? 更直覺: 將過濾器重置為「全部」讓用戶立刻看到新增卡片在最上方
+        if (currentStatusFilter !== 'all') {
+            currentStatusFilter = 'all';
+            updateFilterButtonUI();
+        }
+        applyFilterAndRender();
+    }
+
+    // 初始化過濾器監聽
+    function initFilters() {
+        const allBtn = document.getElementById('filterAll');
+        const activeBtn = document.getElementById('filterActive');
+        const doneBtn = document.getElementById('filterDone');
+        
+        if (allBtn) {
+            allBtn.addEventListener('click', () => {
+                currentStatusFilter = 'all';
+                updateFilterButtonUI();
+                applyFilterAndRender();
+            });
+        }
+        if (activeBtn) {
+            activeBtn.addEventListener('click', () => {
+                currentStatusFilter = 'active';
+                updateFilterButtonUI();
+                applyFilterAndRender();
+            });
+        }
+        if (doneBtn) {
+            doneBtn.addEventListener('click', () => {
+                currentStatusFilter = 'done';
+                updateFilterButtonUI();
+                applyFilterAndRender();
+            });
+        }
+    }
+
+    // 入口初始化
+    function init() {
+        loadData();                    // 1. 載入 localStorage 資料 (無寫死示範)
+        initFilters();                // 2. 設定狀態過濾器事件
+        submitBtn.addEventListener('click', handleAddResource);
+        // 預設顯示全部 (根據目前 records 渲染)
+        currentStatusFilter = 'all';
+        updateFilterButtonUI();
+        applyFilterAndRender();       // 初始渲染
+    }
+
+    // 啟動一切
+    init();
+</script>
+</body>
+</html>
