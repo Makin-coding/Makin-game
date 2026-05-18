@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>資源推薦清單 · 收藏好物</title>
+    <title>心情打卡牆 · 每日心晴紀錄</title>
     <style>
         * {
             margin: 0;
@@ -12,31 +12,32 @@
         }
 
         body {
-            background: linear-gradient(145deg, #eef2f9 0%, #e0e8f2 100%);
-            font-family: system-ui, 'Segoe UI', 'Helvetica Neue', 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(145deg, #fef7e8 0%, #ffefdd 100%);
+            font-family: system-ui, 'Segoe UI', 'Helvetica Neue', 'Noto Sans', sans-serif;
             padding: 2rem 1.5rem;
-            color: #1a2c3e;
+            color: #3c2a1f;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        /* 主卡片風格 */
+        /* 主卡片 */
         .hero-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 40px;
-            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 252, 240, 0.97);
+            border-radius: 48px;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
             padding: 1.8rem 2rem;
             margin-bottom: 1.8rem;
-            border: 1px solid rgba(148, 184, 218, 0.3);
+            border: 1px solid #ffdebc;
         }
 
         h1 {
             font-size: 2rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #1e6f5c, #289672);
+            background: linear-gradient(135deg, #e67e22, #f39c12);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
@@ -46,9 +47,9 @@
         }
 
         .subhead {
-            color: #3b6e5e;
+            color: #c46a2b;
             font-weight: 500;
-            background: #e0f2e9;
+            background: #fff0e2;
             padding: 0.2rem 1rem;
             border-radius: 60px;
             font-size: 0.8rem;
@@ -58,10 +59,10 @@
             margin: 1.2rem 0 1.5rem;
             border: none;
             height: 2px;
-            background: linear-gradient(90deg, #cbdde9, #aac7df, #cbdde9);
+            background: linear-gradient(90deg, #ffdebc, #ffc489, #ffdebc);
         }
 
-        /* 表單區塊 */
+        /* 表單區域 */
         .form-grid {
             display: flex;
             flex-direction: column;
@@ -78,13 +79,13 @@
             font-weight: 700;
             font-size: 0.85rem;
             letter-spacing: 0.5px;
-            color: #226653;
+            color: #b45a2a;
         }
 
-        input, textarea {
+        textarea, select, input {
             font-family: inherit;
             border-radius: 28px;
-            border: 1px solid #cde0ec;
+            border: 1px solid #ffdbb5;
             padding: 0.75rem 1.2rem;
             font-size: 0.95rem;
             transition: 0.2s;
@@ -94,22 +95,22 @@
 
         textarea {
             resize: vertical;
-            min-height: 80px;
+            min-height: 85px;
         }
 
-        input:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus {
             outline: none;
-            border-color: #289672;
-            box-shadow: 0 0 0 3px rgba(40, 150, 114, 0.2);
+            border-color: #f39c12;
+            box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.2);
         }
 
         .btn-primary {
-            background: #1e6f5c;
+            background: #e67e22;
             color: white;
             border: none;
             font-weight: 700;
             cursor: pointer;
-            padding: 0.8rem;
+            padding: 0.85rem;
             border-radius: 40px;
             font-size: 1rem;
             transition: all 0.2s;
@@ -117,19 +118,18 @@
         }
 
         .btn-primary:hover {
-            background: #0e5544;
+            background: #d35400;
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(30,111,92,0.25);
+            box-shadow: 0 10px 20px rgba(211,84,0,0.25);
         }
 
-        /* 過濾器區域 */
-        .filters-panel {
+        /* 雙層過濾器 */
+        .filters-section {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
             gap: 1rem;
-            background: #ffffffcc;
+            justify-content: space-between;
+            background: rgba(255, 246, 235, 0.92);
             backdrop-filter: blur(4px);
             padding: 0.7rem 1.5rem;
             border-radius: 60px;
@@ -145,53 +145,48 @@
 
         .filter-btn {
             background: white;
-            border: 1px solid #caddf0;
+            border: 1px solid #ffd19b;
             padding: 0.4rem 1.2rem;
             border-radius: 50px;
             font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            color: #2c5a4c;
+            color: #a45f2c;
         }
 
         .filter-btn.active {
-            background: #289672;
-            border-color: #289672;
+            background: #e67e22;
+            border-color: #e67e22;
             color: white;
-            box-shadow: 0 2px 8px rgba(40,150,114,0.3);
+            box-shadow: 0 2px 8px rgba(230,126,34,0.3);
         }
 
         .filter-btn:hover:not(.active) {
-            background: #dff3ec;
+            background: #ffe2cd;
         }
 
-        /* 資源卡片顯示風格 (卡片) */
-        .resource-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.4rem;
-            margin-top: 0.5rem;
-        }
-
-        .resource-card {
-            background: white;
-            border-radius: 32px;
-            padding: 1.2rem 1.3rem;
-            transition: transform 0.15s, box-shadow 0.2s;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
-            border-left: 8px solid #77b39f;
+        /* 心情卡片串流 */
+        .stream {
             display: flex;
             flex-direction: column;
-            gap: 0.6rem;
+            gap: 1.2rem;
         }
 
-        .resource-card.done-card {
-            opacity: 0.75;
-            background: #f8fafc;
-            border-left-color: #89a7b3;
-            filter: grayscale(6%);
-            order: 1;
+        .mood-card {
+            background: white;
+            border-radius: 32px;
+            padding: 1.2rem 1.5rem;
+            transition: all 0.2s;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04);
+            border-left: 10px solid #f7b05e;
+        }
+
+        .mood-card.done-card {
+            opacity: 0.7;
+            background: #fefaf5;
+            border-left-color: #bdb38c;
+            filter: grayscale(4%);
         }
 
         .card-header {
@@ -199,86 +194,127 @@
             justify-content: space-between;
             align-items: baseline;
             flex-wrap: wrap;
-            gap: 0.4rem;
+            gap: 0.6rem;
+            margin-bottom: 0.7rem;
         }
 
-        .resource-title {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: #1e6f5c;
+        .category-badge {
+            font-size: 0.7rem;
+            background: #fef0e2;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-weight: 700;
+            color: #c45c1a;
+        }
+
+        .date {
+            font-size: 0.7rem;
+            color: #b68b60;
+            font-weight: 500;
+        }
+
+        .content-text {
+            font-size: 1rem;
+            line-height: 1.45;
+            margin: 0.6rem 0;
             word-break: break-word;
+            background: #fffbf5;
+            padding: 0.6rem 1rem;
+            border-radius: 28px;
+            color: #3b2a1f;
         }
 
-        .badge-status {
-            font-size: 0.65rem;
-            background: #eef2f6;
-            padding: 0.2rem 0.7rem;
-            border-radius: 50px;
-            font-weight: 600;
+        .note-text {
+            font-size: 0.8rem;
+            color: #9b7a5e;
+            background: #fef7ef;
+            padding: 0.4rem 1rem;
+            border-radius: 24px;
+            margin-top: 0.2rem;
+            font-style: italic;
         }
 
-        .resource-type {
-            background: #e9f3ef;
-            font-size: 0.7rem;
-            padding: 0.2rem 1rem;
-            border-radius: 30px;
-            display: inline-block;
-            width: fit-content;
-            font-weight: 600;
-            color: #226653;
-        }
-
-        .resource-note {
-            font-size: 0.85rem;
-            color: #4f6b7a;
-            line-height: 1.4;
-            background: #fbfefc;
-            padding: 0.5rem 0.8rem;
-            border-radius: 20px;
-            margin: 0.2rem 0;
-        }
-
-        .date-meta {
-            font-size: 0.7rem;
-            color: #7e9aab;
-        }
-
-        .card-actions {
+        .card-footer {
             display: flex;
             flex-wrap: wrap;
-            justify-content: flex-start;
-            gap: 0.8rem;
-            margin-top: 0.4rem;
+            justify-content: space-between;
             align-items: center;
+            margin-top: 0.5rem;
+            gap: 0.8rem;
         }
 
-        .btn-status-toggle {
-            background: #e9f0f5;
+        .likes-area {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff2e8;
+            padding: 0.2rem 1rem 0.2rem 0.8rem;
+            border-radius: 60px;
+        }
+
+        .like-count {
+            font-weight: 800;
+            min-width: 28px;
+            text-align: center;
+            color: #e67e22;
+            font-size: 1rem;
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 40px;
+            transition: 0.1s;
+            font-weight: bold;
+        }
+
+        .btn-like {
+            color: #e67e22;
+            background: #fff0e5;
+            border-radius: 60px;
+            padding: 0.2rem 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .btn-like:hover {
+            background: #ffe0cc;
+            transform: scale(1.02);
+        }
+
+        .btn-status {
+            background: #f3ede7;
             border: none;
             border-radius: 40px;
-            padding: 0.3rem 1.2rem;
-            font-size: 0.7rem;
+            padding: 0.4rem 1.2rem;
+            font-size: 0.75rem;
             font-weight: 600;
             cursor: pointer;
-            color: #2c5a4c;
+            color: #a45d2e;
             transition: 0.1s;
+        }
+
+        .btn-status:hover {
+            background: #e6d9ce;
         }
 
         .empty-state {
             text-align: center;
-            padding: 3rem;
-            background: #fffef7;
-            border-radius: 48px;
-            color: #6f9485;
+            padding: 2.8rem;
+            background: #fffcf5;
+            border-radius: 60px;
+            color: #c98f5a;
             font-weight: 500;
-            grid-column: 1 / -1;
         }
 
         footer {
             text-align: center;
             margin-top: 2rem;
             font-size: 0.7rem;
-            color: #5e8071;
+            color: #b87a48;
         }
 
         @media (max-width: 640px) {
@@ -288,136 +324,134 @@
             .hero-card {
                 padding: 1.3rem;
             }
-            .resource-grid {
-                grid-template-columns: 1fr;
+            .mood-card {
+                padding: 1rem;
             }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <!-- 主標題＋表單 -->
+    <!-- 標題＋表單 -->
     <div class="hero-card">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-            <h1>📚 資源推薦清單 · 好物共享</h1>
-            <span class="subhead">✨ 收藏你愛的學習/工具/靈感</span>
+            <h1>☀️ 心情打卡牆 · 每日心晴</h1>
+            <span class="subhead">✨ 匿名心情紀錄｜共感支持</span>
         </div>
         <hr>
         <div class="form-grid">
             <div class="input-group">
-                <label>📌 資源名稱 <span style="color:#c2410c;">*</span></label>
-                <input type="text" id="resourceName" placeholder="例如：Figma 設計工具、原子習慣電子書、洋蔥閱讀法筆記" autocomplete="off">
+                <label>📝 今天的心情描述 <span style="color:#c2410c;">*</span></label>
+                <textarea id="moodContent" placeholder="例：今天考試終於結束了，好放鬆～ / 午後陽光配拿鐵，心情平靜" maxlength="300"></textarea>
             </div>
             <div class="input-group">
-                <label>🏷️ 資源類型 <span style="color:#c2410c;">*</span></label>
-                <input type="text" id="resourceType" placeholder="例如：網站 / 書籍 / 影片 / 課程 / 工具" list="typeSuggestions">
-                <datalist id="typeSuggestions">
-                    <option>網站</option>
-                    <option>書籍</option>
-                    <option>影片</option>
-                    <option>課程</option>
-                    <option>工具</option>
-                    <option>文章</option>
-                </datalist>
+                <label>🎭 心情分類 <span style="color:#c2410c;">*</span></label>
+                <select id="moodCategory">
+                    <option value="開心">😊 開心</option>
+                    <option value="平靜">🍃 平靜</option>
+                    <option value="疲憊">😴 疲憊</option>
+                    <option value="焦慮">🌀 焦慮</option>
+                    <option value="感動">💖 感動</option>
+                </select>
             </div>
             <div class="input-group">
-                <label>📝 推薦備註 (可選)</label>
-                <textarea id="resourceNote" placeholder="簡單說明為什麼推薦這項資源、適合誰..."></textarea>
+                <label>📎 補充備註 (可選)</label>
+                <input type="text" id="moodNote" placeholder="例如：今天發生的小故事、給自己的話...">
             </div>
-            <button class="btn-primary" id="submitBtn">➕ 新增資源推薦</button>
+            <button class="btn-primary" id="submitBtn">📆 打卡｜記錄心情</button>
         </div>
     </div>
 
-    <!-- 過濾器：全部 / active / done -->
-    <div class="filters-panel">
+    <!-- 雙重過濾器: 狀態 + 分類 -->
+    <div class="filters-section">
         <div class="filter-group">
-            <span style="font-size:0.8rem; font-weight:600;">🔍 狀態：</span>
-            <button data-status-filter="all" class="filter-btn active" id="filterAll">全部</button>
-            <button data-status-filter="active" class="filter-btn" id="filterActive">📌 active (待探索)</button>
-            <button data-status-filter="done" class="filter-btn" id="filterDone">✅ 已完成 / 已讀</button>
+            <span style="font-size:0.8rem; font-weight:600;">📌 狀態：</span>
+            <button data-status="all" class="filter-btn active" id="filterStatusAll">全部</button>
+            <button data-status="active" class="filter-btn" id="filterStatusActive">🌟 active</button>
+            <button data-status="done" class="filter-btn" id="filterStatusDone">✅ 已沉澱</button>
         </div>
         <div class="filter-group">
-            <span style="font-size:0.8rem; font-weight:600;">📂 快速篩選 :</span>
-            <span style="font-size:0.7rem; color:#5c7e6f;">(搭配類型篩選在卡片區)</span>
+            <span style="font-size:0.8rem; font-weight:600;">🏷️ 分類：</span>
+            <button data-cat="all" class="filter-btn active" id="filterCatAll">全部</button>
+            <button data-cat="開心" class="filter-btn" id="filterCatHappy">😊 開心</button>
+            <button data-cat="平靜" class="filter-btn" id="filterCatCalm">🍃 平靜</button>
+            <button data-cat="疲憊" class="filter-btn" id="filterCatTired">😴 疲憊</button>
+            <button data-cat="焦慮" class="filter-btn" id="filterCatAnxious">🌀 焦慮</button>
+            <button data-cat="感動" class="filter-btn" id="filterCatTouched">💖 感動</button>
         </div>
     </div>
 
-    <!-- 資源卡片展示區 (卡片模式) -->
-    <div id="resourceListContainer" class="resource-grid">
-        <div class="empty-state">✨ 還沒有推薦資源，新增一筆好東西吧！</div>
+    <!-- 心情打卡串流 -->
+    <div id="moodStream" class="stream">
+        <div class="empty-state">💭 還沒有任何心情打卡，寫下今天的故事吧～</div>
     </div>
-    <footer>💾 資料自動儲存於瀏覽器 | 點擊「標記完成」可切換狀態 | 支援篩選 active / done</footer>
+    <footer>❤️ 按 +1 給予共感支持 | 切換「active / 已沉澱」管理情緒 | 資料自動儲存於瀏覽器</footer>
 </div>
 
 <script>
-    // ========================= DATA CONTRACT =========================
-    // 系統名稱：資源推薦清單
-    // 資料主體：推薦資源 (resource recommendation)
-    // 
-    // 每筆 record 欄位與用途：
-    // - id: 唯一識別 (string) 用於更新/刪除
-    // - createdAt: ISO 日期字串，紀錄建立時間，排序依據
-    // - status: 'active' | 'done'  (預設 active，待探索/已完成閱讀或使用)
-    // - name: 資源名稱 (必填) -> 對應資源標題
-    // - type: 資源類型 (必填) -> ex: 書籍, 網站, 課程...
-    // - note: 備註說明 (可選) -> 補充推薦原因
-    // 
-    // 功能實作符合所有規範：
-    // 1. 表單新增資源 (名稱、類型必填，備註可選)
-    // 2. 新增後即時顯示，渲染在最上方(依時間倒序)
-    // 3. 使用卡片風格顯示所有資料 (XXX_DISPLAY_STYLE = 卡片)
-    // 4. status 預設 active，可切換至 done
-    // 5. 每筆卡片有「切換狀態」按鈕 (active⇄done)
-    // 6. done 狀態卡片視覺淡化、顯示「✅ 已完成/已讀」
-    // 7. 過濾器: 全部 / active / done
-    // 8. localStorage 儲存 key = 'records'
-    // 9. 五大 function: createRecord, saveData, loadData, renderList, updateRecord
-    // 10. 無示範資料寫死
+    // ===================== DATA CONTRACT =====================
+    // 系統名稱：心情打卡牆
+    // 資料主體：心情打卡
+    // 每筆 record 欄位說明：
+    // - id: string, 唯一識別 (用於更新)
+    // - createdAt: ISO 日期字串，建立時間 (排序用，最新在上)
+    // - status: 'active' | 'done' (active: 當下心情, done: 已沉澱)
+    // - content: string, 心情描述，必填
+    // - category: '開心' | '平靜' | '疲憊' | '焦慮' | '感動'
+    // - note: string, 補充備註，可選
+    // - likes: number, 預設0，可+1增加共鳴
+    //
+    // 功能：表單新增、卡片顯示、+1按讚、切換狀態、狀態過濾＋心情分類過濾、
+    //       localStorage儲存 (key=records)，刷新頁面資料存在。
+    // 核心函式: createRecord, saveData, loadData, updateRecord, renderList
 
     // ---------- 全域變數 ----------
-    let records = [];                     // 儲存所有資源紀錄
-    let currentStatusFilter = 'all';     // 'all', 'active', 'done'
+    let records = [];                         // 所有心情打卡
+    let currentStatusFilter = 'all';         // 'all', 'active', 'done'
+    let currentCategoryFilter = 'all';       // 'all', '開心','平靜','疲憊','焦慮','感動'
 
-    const resourceNameInput = document.getElementById('resourceName');
-    const resourceTypeInput = document.getElementById('resourceType');
-    const resourceNoteTextarea = document.getElementById('resourceNote');
+    const streamContainer = document.getElementById('moodStream');
     const submitBtn = document.getElementById('submitBtn');
-    const container = document.getElementById('resourceListContainer');
+    const contentTextarea = document.getElementById('moodContent');
+    const categorySelect = document.getElementById('moodCategory');
+    const noteInput = document.getElementById('moodNote');
 
-    // ========== 核心函式區塊 (完全依照規範分離) ==========
+    // ========== 核心功能 (完全符合規範) ==========
 
     /**
-     * createRecord(formData)
-     * @param {Object} formData 包含 name, type, note (note可選)
-     * @returns {Object} 新建立的 record
+     * 1. createRecord(formData)
+     * @param {Object} formData 包含 content, category, note
+     * @returns {Object} 新建立的心情打卡 record
      */
     function createRecord(formData) {
-        const { name, type, note } = formData;
+        const { content, category, note } = formData;
         const now = new Date();
-        const uniqueId = `rec_${now.getTime()}_${Math.random().toString(36).substring(2, 8)}`;
+        const uniqueId = `mood_${now.getTime()}_${Math.random().toString(36).substring(2, 8)}`;
         return {
             id: uniqueId,
             createdAt: now.toISOString(),
-            status: 'active',       // 預設 active
-            name: name.trim(),
-            type: type.trim(),
-            note: note ? note.trim() : ''
+            status: 'active',
+            content: content.trim(),
+            category: category,
+            note: note ? note.trim() : '',
+            likes: 0
         };
     }
 
     /**
-     * saveData(record)
-     * 新增一筆 record 到 records array 最前方 (最新在上)，並寫入 localStorage
+     * 2. saveData(record)
+     * 新增一筆 record 到 records 陣列最前方 (最新顯示在最上面)
+     * 並寫入 localStorage
      */
     function saveData(record) {
-        records.unshift(record);    // 新推薦顯示在最上方
+        records.unshift(record);      // 最新打卡在最上方
         persistToLocalStorage();
     }
 
     /**
-     * loadData()
-     * 從 localStorage 讀取 records，若無資料或格式異常回傳空陣列
-     * 並確保相容舊格式
+     * 3. loadData()
+     * 從 localStorage 讀取 records，若無資料或格式錯誤回傳 []
+     * 確保每筆都有必要欄位
      */
     function loadData() {
         const stored = localStorage.getItem('records');
@@ -426,14 +460,15 @@
                 const parsed = JSON.parse(stored);
                 if (Array.isArray(parsed)) {
                     records = parsed.filter(item => item && typeof item === 'object' && item.id);
-                    // 修正遺漏欄位 (相容舊資料)
+                    // 資料正規化 (兼容舊版)
                     records = records.map(r => ({
                         id: r.id,
                         createdAt: r.createdAt || new Date().toISOString(),
                         status: (r.status === 'active' || r.status === 'done') ? r.status : 'active',
-                        name: r.name || '未命名資源',
-                        type: r.type || '其他',
-                        note: r.note || ''
+                        content: r.content || '（沒有描述）',
+                        category: ['開心', '平靜', '疲憊', '焦慮', '感動'].includes(r.category) ? r.category : '開心',
+                        note: r.note || '',
+                        likes: typeof r.likes === 'number' ? r.likes : 0
                     }));
                 } else {
                     records = [];
@@ -442,15 +477,15 @@
                 records = [];
             }
         } else {
-            records = [];   // 沒有任何寫死的示範資料
+            records = [];   // 完全無示範資料
         }
         return records;
     }
 
     /**
-     * updateRecord(id, changes)
-     * 更新特定 record 的欄位 (例如 status, 或未來擴充 likes 但此主題不需要)
-     * 更新後自動持久化
+     * 4. updateRecord(id, changes)
+     * 更新指定 record 的屬性 (例如 likes, status)
+     * @returns {boolean} 是否更新成功
      */
     function updateRecord(id, changes) {
         const index = records.findIndex(rec => rec.id === id);
@@ -461,53 +496,64 @@
     }
 
     /**
-     * renderList(recordsToShow)
-     * 根據傳入的 records 陣列，使用卡片風格顯示在頁面上
-     * 同時過濾器狀態會提前篩選，此處只負責視覺繪製
+     * 5. renderList(recordsToShow)
+     * 根據傳入的 records 陣列繪製卡片 (顯示於頁面)
      */
     function renderList(recordsToShow) {
-        if (!container) return;
+        if (!streamContainer) return;
         if (!recordsToShow.length) {
-            container.innerHTML = `<div class="empty-state">📭 目前沒有符合的資源推薦，新增一則實用內容吧！</div>`;
+            streamContainer.innerHTML = `<div class="empty-state">🌸 沒有符合的心情打卡，寫下今天的情緒吧～</div>`;
             return;
         }
 
-        // 按照 createdAt 最新在上方排序 (再次確認)
+        // 按照 createdAt 最新在上排序 (再次確保)
         const sorted = [...recordsToShow].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
         const cardsHTML = sorted.map(record => {
             const isDone = record.status === 'done';
             const cardDoneClass = isDone ? 'done-card' : '';
-            const statusDisplayText = isDone ? '✅ 已完成 / 已讀' : '📌 active 待探索';
-            const toggleButtonText = isDone ? '🔄 恢復 active' : '✓ 標記完成';
-
+            const statusText = isDone ? '✅ 已沉澱' : '🌟 active';
+            const toggleBtnText = isDone ? '↻ 恢復 active' : '✓ 標記沉澱';
             const formattedDate = new Date(record.createdAt).toLocaleString('zh-TW', { hour12: false });
-
+            
+            // 分類emoji
+            let catEmoji = '';
+            if (record.category === '開心') catEmoji = '😊';
+            else if (record.category === '平靜') catEmoji = '🍃';
+            else if (record.category === '疲憊') catEmoji = '😴';
+            else if (record.category === '焦慮') catEmoji = '🌀';
+            else if (record.category === '感動') catEmoji = '💖';
+            else catEmoji = '✨';
+            
+            const noteHtml = record.note ? `<div class="note-text">📎 ${escapeHtml(record.note)}</div>` : '';
+            
             return `
-                <div class="resource-card ${cardDoneClass}" data-record-id="${record.id}">
+                <div class="mood-card ${cardDoneClass}" data-id="${record.id}">
                     <div class="card-header">
-                        <div class="resource-title">📖 ${escapeHtml(record.name)}</div>
-                        <span class="badge-status">${statusDisplayText}</span>
+                        <span class="category-badge">${catEmoji} ${record.category}</span>
+                        <span class="date">📅 ${formattedDate}</span>
                     </div>
-                    <div>
-                        <span class="resource-type">🔖 ${escapeHtml(record.type)}</span>
-                    </div>
-                    ${record.note ? `<div class="resource-note">📎 備註：${escapeHtml(record.note)}</div>` : ''}
-                    <div class="date-meta">🕒 加入於 ${formattedDate}</div>
-                    <div class="card-actions">
-                        <button class="btn-status-toggle" data-action="toggle" data-id="${record.id}">${toggleButtonText}</button>
+                    <div class="content-text">💬 ${escapeHtml(record.content)}</div>
+                    ${noteHtml}
+                    <div class="card-footer">
+                        <div class="likes-area">
+                            <button class="btn-icon btn-like" data-like-id="${record.id}" title="+1 共感支持">👍 +1</button>
+                            <span class="like-count" id="like-count-${record.id}">${record.likes}</span>
+                        </div>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <button class="btn-status" data-toggle-id="${record.id}">${toggleBtnText}</button>
+                            <span style="font-size:0.7rem; background:#f2e5da; padding:0.2rem 0.7rem; border-radius:30px;">${statusText}</span>
+                        </div>
                     </div>
                 </div>
             `;
         }).join('');
 
-        container.innerHTML = cardsHTML;
-
-        // 動態綁定卡片內的切換按鈕事件 (利用委託或直接綁定)
-        attachCardEvents();
+        streamContainer.innerHTML = cardsHTML;
+        attachCardEvents();   // 動態按鈕事件委派
     }
 
-    // 輔助: 防XSS
+    // 防 XSS
     function escapeHtml(str) {
         if (!str) return '';
         return str.replace(/[&<>]/g, function(m) {
@@ -515,146 +561,200 @@
             if (m === '<') return '&lt;';
             if (m === '>') return '&gt;';
             return m;
-        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-            return c;
         });
     }
 
-    // 卡片按鈕事件綁定 (切換狀態)
+    // 事件委派處理 +1 及 toggle status
     function attachCardEvents() {
-        // 使用事件委託避免重複綁定
-        if (!container) return;
-        container.removeEventListener('click', globalCardClickHandler);
-        container.addEventListener('click', globalCardClickHandler);
+        if (!streamContainer) return;
+        streamContainer.removeEventListener('click', globalClickHandler);
+        streamContainer.addEventListener('click', globalClickHandler);
     }
 
-    function globalCardClickHandler(e) {
-        const btn = e.target.closest('[data-action="toggle"]');
-        if (!btn) return;
-        const id = btn.getAttribute('data-id');
-        if (id) {
+    function globalClickHandler(e) {
+        // +1 按鈕邏輯
+        const likeBtn = e.target.closest('.btn-like');
+        if (likeBtn && likeBtn.getAttribute('data-like-id')) {
+            const id = likeBtn.getAttribute('data-like-id');
+            const targetRecord = records.find(r => r.id === id);
+            if (targetRecord) {
+                const newLikes = (targetRecord.likes || 0) + 1;
+                updateRecord(id, { likes: newLikes });
+                applyFiltersAndRender();   // 刷新畫面
+            }
+            e.preventDefault();
+            return;
+        }
+        // 切換狀態按鈕
+        const toggleBtn = e.target.closest('.btn-status');
+        if (toggleBtn && toggleBtn.getAttribute('data-toggle-id')) {
+            const id = toggleBtn.getAttribute('data-toggle-id');
             const targetRecord = records.find(r => r.id === id);
             if (targetRecord) {
                 const newStatus = targetRecord.status === 'active' ? 'done' : 'active';
                 updateRecord(id, { status: newStatus });
-                // 更新後重新套用當前過濾器並渲染
-                applyFilterAndRender();
+                applyFiltersAndRender();
             }
+            e.preventDefault();
+            return;
         }
-        e.preventDefault();
     }
 
-    // 持久化函式 (localStorage)
+    // 持久化 localStorage (key='records')
     function persistToLocalStorage() {
         localStorage.setItem('records', JSON.stringify(records));
     }
 
-    // 依照目前狀態過濾器取得要顯示的資料
+    // 根據目前的 statusFilter + categoryFilter 取得過濾後的資料
     function getFilteredRecords() {
-        if (currentStatusFilter === 'all') {
-            return [...records];
+        let filtered = [...records];
+        // 狀態過濾
+        if (currentStatusFilter !== 'all') {
+            filtered = filtered.filter(rec => rec.status === currentStatusFilter);
         }
-        return records.filter(rec => rec.status === currentStatusFilter);
+        // 分類過濾
+        if (currentCategoryFilter !== 'all') {
+            filtered = filtered.filter(rec => rec.category === currentCategoryFilter);
+        }
+        return filtered;
     }
 
-    // 套用過濾器並重新渲染
-    function applyFilterAndRender() {
-        const filtered = getFilteredRecords();
-        renderList(filtered);
-        updateFilterButtonUI();
+    // 套用過濾條件並重新渲染
+    function applyFiltersAndRender() {
+        const filteredData = getFilteredRecords();
+        renderList(filteredData);
+        updateFilterButtonsUI();
     }
 
-    // 更新過濾器按鈕 active 樣式
-    function updateFilterButtonUI() {
+    // 更新過濾器按鈕樣式 (狀態 + 分類)
+    function updateFilterButtonsUI() {
+        // 狀態按鈕
         const statusBtns = [
-            { id: 'filterAll', value: 'all' },
-            { id: 'filterActive', value: 'active' },
-            { id: 'filterDone', value: 'done' }
+            { id: 'filterStatusAll', value: 'all' },
+            { id: 'filterStatusActive', value: 'active' },
+            { id: 'filterStatusDone', value: 'done' }
         ];
         statusBtns.forEach(({ id, value }) => {
             const btn = document.getElementById(id);
             if (btn) {
-                if (currentStatusFilter === value) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
+                if (currentStatusFilter === value) btn.classList.add('active');
+                else btn.classList.remove('active');
+            }
+        });
+        // 分類按鈕
+        const catBtns = [
+            { id: 'filterCatAll', value: 'all' },
+            { id: 'filterCatHappy', value: '開心' },
+            { id: 'filterCatCalm', value: '平靜' },
+            { id: 'filterCatTired', value: '疲憊' },
+            { id: 'filterCatAnxious', value: '焦慮' },
+            { id: 'filterCatTouched', value: '感動' }
+        ];
+        catBtns.forEach(({ id, value }) => {
+            const btn = document.getElementById(id);
+            if (btn) {
+                if (currentCategoryFilter === value) btn.classList.add('active');
+                else btn.classList.remove('active');
             }
         });
     }
 
-    // 新增資源邏輯 (使用表單)
-    function handleAddResource() {
-        const name = resourceNameInput.value.trim();
-        const type = resourceTypeInput.value.trim();
-        if (!name) {
-            alert('請填寫「資源名稱」');
+    // 新增心情打卡
+    function handleAddMood() {
+        const content = contentTextarea.value.trim();
+        if (!content) {
+            alert('請填寫今天的心情描述～ 留下溫暖的文字吧！');
             return;
         }
-        if (!type) {
-            alert('請填寫「資源類型」(例如：書籍、網站、課程)');
-            return;
-        }
-        const note = resourceNoteTextarea.value;
-
-        // 建立新 record
-        const newRecord = createRecord({ name, type, note });
-        saveData(newRecord);    // 存至 records 並持久化
-
+        const category = categorySelect.value;
+        const note = noteInput.value;
+        const newRecord = createRecord({ content, category, note });
+        saveData(newRecord);
         // 清空表單
-        resourceNameInput.value = '';
-        resourceTypeInput.value = '';
-        resourceNoteTextarea.value = '';
-
-        // 新增後維持過濾器顯示全部? 更直覺: 將過濾器重置為「全部」讓用戶立刻看到新增卡片在最上方
-        if (currentStatusFilter !== 'all') {
+        contentTextarea.value = '';
+        noteInput.value = '';
+        // 為了讓新增打卡立刻顯示在最上方，將過濾器重置為「全部/全部」
+        if (currentStatusFilter !== 'all' || currentCategoryFilter !== 'all') {
             currentStatusFilter = 'all';
-            updateFilterButtonUI();
+            currentCategoryFilter = 'all';
+            updateFilterButtonsUI();
         }
-        applyFilterAndRender();
+        applyFiltersAndRender();
     }
 
-    // 初始化過濾器監聽
+    // 初始化過濾器事件監聽
     function initFilters() {
-        const allBtn = document.getElementById('filterAll');
-        const activeBtn = document.getElementById('filterActive');
-        const doneBtn = document.getElementById('filterDone');
-        
-        if (allBtn) {
-            allBtn.addEventListener('click', () => {
-                currentStatusFilter = 'all';
-                updateFilterButtonUI();
-                applyFilterAndRender();
-            });
-        }
-        if (activeBtn) {
-            activeBtn.addEventListener('click', () => {
-                currentStatusFilter = 'active';
-                updateFilterButtonUI();
-                applyFilterAndRender();
-            });
-        }
-        if (doneBtn) {
-            doneBtn.addEventListener('click', () => {
-                currentStatusFilter = 'done';
-                updateFilterButtonUI();
-                applyFilterAndRender();
-            });
-        }
+        // 狀態過濾器
+        const allStatus = document.getElementById('filterStatusAll');
+        const activeStatus = document.getElementById('filterStatusActive');
+        const doneStatus = document.getElementById('filterStatusDone');
+        if (allStatus) allStatus.addEventListener('click', () => {
+            currentStatusFilter = 'all';
+            updateFilterButtonsUI();
+            applyFiltersAndRender();
+        });
+        if (activeStatus) activeStatus.addEventListener('click', () => {
+            currentStatusFilter = 'active';
+            updateFilterButtonsUI();
+            applyFiltersAndRender();
+        });
+        if (doneStatus) doneStatus.addEventListener('click', () => {
+            currentStatusFilter = 'done';
+            updateFilterButtonsUI();
+            applyFiltersAndRender();
+        });
+
+        // 分類過濾器
+        const catAll = document.getElementById('filterCatAll');
+        const catHappy = document.getElementById('filterCatHappy');
+        const catCalm = document.getElementById('filterCatCalm');
+        const catTired = document.getElementById('filterCatTired');
+        const catAnxious = document.getElementById('filterCatAnxious');
+        const catTouched = document.getElementById('filterCatTouched');
+        if (catAll) catAll.addEventListener('click', () => {
+            currentCategoryFilter = 'all';
+            updateFilterButtonsUI();
+            applyFiltersAndRender();
+        });
+        if (catHappy) catHappy.addEventListener('click', () => {
+            currentCategoryFilter = '開心';
+            updateFilterButtonsUI();
+            applyFiltersAndRender();
+        });
+        if (catCalm) catCalm.addEventListener('click', () => {
+            currentCategoryFilter = '平靜';
+            updateFilterButtonsUI();
+            applyFiltersAndRender();
+        });
+        if (catTired) catTired.addEventListener('click', () => {
+            currentCategoryFilter = '疲憊';
+            updateFilterButtonsUI();
+            applyFiltersAndRender();
+        });
+        if (catAnxious) catAnxious.addEventListener('click', () => {
+            currentCategoryFilter = '焦慮';
+            updateFilterButtonsUI();
+            applyFiltersAndRender();
+        });
+        if (catTouched) catTouched.addEventListener('click', () => {
+            currentCategoryFilter = '感動';
+            updateFilterButtonsUI();
+            applyFiltersAndRender();
+        });
     }
 
-    // 入口初始化
+    // 啟動系統
     function init() {
-        loadData();                    // 1. 載入 localStorage 資料 (無寫死示範)
-        initFilters();                // 2. 設定狀態過濾器事件
-        submitBtn.addEventListener('click', handleAddResource);
-        // 預設顯示全部 (根據目前 records 渲染)
+        loadData();                   // 讀取 localStorage
+        initFilters();               // 綁定過濾器事件
+        submitBtn.addEventListener('click', handleAddMood);
+        // 預設過濾器全部
         currentStatusFilter = 'all';
-        updateFilterButtonUI();
-        applyFilterAndRender();       // 初始渲染
+        currentCategoryFilter = 'all';
+        updateFilterButtonsUI();
+        applyFiltersAndRender();
     }
 
-    // 啟動一切
     init();
 </script>
 </body>
